@@ -1,0 +1,87 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/ParentLinearLayoutStyle"
+    android:id="@+id/linearLayoutDiaTrabajo"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="8dp"
+    android:background="@drawable/rounded_background">
+
+    <!-- Fecha -->
+    <LinearLayout
+        style="@style/RowLinearLayoutStyle"
+        >
+
+        <TextView
+            android:id="@+id/labelFecha"
+            style="@style/LabelTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fecha: " />
+
+        <TextView
+            android:id="@+id/tvFecha"
+            style="@style/ValueTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""/>
+    </LinearLayout>
+
+    <!-- Hora de Entrada -->
+    <LinearLayout
+        style="@style/RowLinearLayoutStyle">
+
+        <TextView
+            android:id="@+id/labelHoraEntrada"
+            style="@style/LabelTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hora de Entrada: " />
+
+        <TextView
+            android:id="@+id/tvHoraEntrada"
+            style="@style/ValueTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""/>
+    </LinearLayout>
+
+    <!-- Hora de Salida -->
+    <LinearLayout
+        style="@style/RowLinearLayoutStyle">
+
+        <TextView
+            android:id="@+id/labelHoraSalida"
+            style="@style/LabelTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hora de Salida: " />
+
+        <TextView
+            android:id="@+id/tvHoraSalida"
+            style="@style/ValueTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""/>
+    </LinearLayout>
+
+    <!-- Horas Totales -->
+    <LinearLayout
+        style="@style/RowLinearLayoutStyle">
+
+        <TextView
+            android:id="@+id/labelHorasTotales"
+            style="@style/LabelTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Horas Totales: " />
+
+        <TextView
+            android:id="@+id/tvHorasTotales"
+            style="@style/ValueTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""/>
+    </LinearLayout>
+
+</LinearLayout>

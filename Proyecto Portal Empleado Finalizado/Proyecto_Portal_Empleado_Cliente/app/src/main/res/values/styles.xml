@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Base application theme -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Activar la propiedad para que el fondo se extienda a la barra de navegación -->
+        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+        <!-- Estilo para los Label TextViews (como Fecha:, Hora de Entrada:, etc.) -->
+        <style name="LabelTextStyle">
+            <item name="android:textStyle">bold</item>
+            <item name="android:textSize">16sp</item>
+            <item name="android:textColor">@color/black</item> <!-- Color personalizado -->
+        </style>
+
+        <!-- Estilo para los Value TextViews (como tvFecha, tvHoraEntrada, etc.) -->
+        <style name="ValueTextStyle">
+            <item name="android:textStyle">normal</item>
+            <item name="android:textSize">16sp</item>
+            <item name="android:textColor">#757575</item> <!-- Color gris oscuro -->
+        </style>
+
+        <!-- Estilo para los LinearLayouts que contienen pares de label/valor -->
+        <style name="RowLinearLayoutStyle">
+            <item name="android:layout_width">match_parent</item>
+            <item name="android:layout_height">wrap_content</item>
+            <item name="android:orientation">horizontal</item>
+            <item name="android:background">@android:color/white</item>
+            <item name="android:padding">8dp</item> <!-- Espacio entre filas -->
+        </style>
+
+        <!-- Estilo general para el LinearLayout padre -->
+        <style name="ParentLinearLayoutStyle">
+            <item name="android:orientation">vertical</item>
+            <item name="android:padding">4dp</item>
+        </style>
+
+    <style name="ArchivoTitleStyle">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="ArchivoDetailStyle">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/dark_gray</item>
+    </style>
+
+    <style name="ArchivoImageViewStyle">
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:background">@color/light_gray</item>
+    </style>
+</resources>

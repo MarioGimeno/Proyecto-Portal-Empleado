@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@drawable/edittext_background"
+    android:layout_marginBottom="8dp"> <!-- Agrega margen al fondo para separar entre instancias -->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <TextView
+            android:id="@+id/tvNombreArchivo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nombre del archivo"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:textColor="@android:color/black"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"/> <!-- Texto en negro -->
+
+        <ImageView
+            android:id="@+id/imageViewLupa"
+            android:layout_width="16sp"
+            android:layout_height="16sp"
+            android:src="@drawable/ic_search"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:adjustViewBounds="true"/> <!-- Imagen ajustada al tamaño del texto -->
+
+    </RelativeLayout>
+
+    <!-- ImageView para mostrar el PDF ajustado al ancho completo -->
+    <ImageView
+        android:id="@+id/pdfImageView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:background="@android:color/white" /> <!-- Fondo blanco para el ImageView -->
+
+</LinearLayout>

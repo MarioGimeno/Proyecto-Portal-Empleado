@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:elevation="4dp"
+    android:padding="16dp"
+    android:layout_margin="8dp">
+
+    <TextView
+        android:id="@+id/tvVacacion"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Periodo de vacaciones"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/ivEstadoVacacion"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginEnd="8dp" />
+
+    <TextView
+        android:id="@+id/tvFechaInicio"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Inicio: 2024-10-07"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/ivEstadoVacacion"
+        app:layout_constraintTop_toBottomOf="@+id/tvVacacion"
+        android:layout_marginEnd="8dp" />
+
+    <TextView
+        android:id="@+id/tvFechaFin"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Fin: 2024-10-14"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/ivEstadoVacacion"
+        app:layout_constraintTop_toBottomOf="@+id/tvFechaInicio"
+        android:layout_marginEnd="8dp" />
+
+    <ImageView
+        android:id="@+id/ivEstadoVacacion"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/tvFechaFin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_pending" />
+
+    <Button
+        android:id="@+id/btnAprobar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Aprobar"
+        android:backgroundTint="@android:color/holo_green_dark"
+        android:textColor="@android:color/white"
+        android:layout_marginTop="8dp"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@+id/tvFechaFin"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btnRechazar"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <Button
+        android:id="@+id/btnRechazar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Rechazar"
+        android:backgroundTint="@android:color/holo_red_dark"
+        android:textColor="@android:color/white"
+        android:layout_marginTop="8dp"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@+id/tvFechaFin"
+        app:layout_constraintStart_toEndOf="@+id/btnAprobar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

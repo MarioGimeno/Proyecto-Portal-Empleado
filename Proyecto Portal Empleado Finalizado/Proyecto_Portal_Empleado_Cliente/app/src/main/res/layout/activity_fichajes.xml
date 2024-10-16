@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/layoutFichaje"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp"
+        android:background="#85d06a">
+
+        <!-- Título o encabezado -->
+        <TextView
+            android:id="@+id/tvTituloFichaje"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fichajes"
+            android:textSize="40sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Contenedor circular para el contador -->
+        <FrameLayout
+            android:id="@+id/circleFrameLayout"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_marginBottom="100dp"
+            android:background="@drawable/circular_background"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.5">
+
+            <!-- Fecha y hora actual (contador) dentro del círculo -->
+            <TextView
+                android:id="@+id/tvFechaHoraActual"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="00:00:00"
+                android:textColor="@android:color/black"
+                android:textSize="32sp"
+                android:textStyle="bold" />
+        </FrameLayout>
+
+        <!-- Botón de fichar entrada -->
+        <Button
+            android:id="@+id/btnFicharEntrada"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Fichar Entrada"
+            android:backgroundTint="@color/green"
+            android:textColor="@color/white"
+            android:padding="16dp"
+            android:textSize="18sp"
+            app:layout_constraintTop_toBottomOf="@id/circleFrameLayout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="24dp" />
+
+        <!-- Botón de fichar salida -->
+        <Button
+            android:id="@+id/btnFicharSalida"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Fichar Salida"
+            android:backgroundTint="@color/red"
+            android:textColor="@color/white"
+            android:padding="16dp"
+            android:textSize="18sp"
+            app:layout_constraintTop_toBottomOf="@id/btnFicharEntrada"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="24dp" />
+
+        <!-- Botones Ver Historial y Volver fijos abajo -->
+        <Button
+            android:id="@+id/btnVerHistorial"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Ver Historial"
+            android:textSize="16sp"
+            android:textColor="@android:color/white"
+            android:background="@drawable/button_background"
+            android:padding="12dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btnVolver"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="16dp" />
+
+        <Button
+            android:id="@+id/btnVolver"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Volver"
+            android:textColor="@android:color/white"
+            android:background="@drawable/button_background"
+            android:padding="12dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btnVerHistorial"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="8dp"
+            android:layout_marginBottom="16dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>

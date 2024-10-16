@@ -1,0 +1,25 @@
+// build.gradle (root project)
+
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:8.1.0'
+
+    }
+}
+
+// Remove this block
+// allprojects {
+//     repositories {
+//         google()
+//         mavenCentral()
+//     }
+// }
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

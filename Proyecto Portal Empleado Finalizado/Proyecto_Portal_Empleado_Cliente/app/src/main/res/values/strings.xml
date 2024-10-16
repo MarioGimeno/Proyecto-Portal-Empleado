@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Proyecto_Portal_Empleado</string>
+    <string-array name="categorias_array">
+        <item>Contrato</item>
+        <item>Nomina</item>
+    </string-array>
+</resources>
