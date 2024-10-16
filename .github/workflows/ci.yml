@@ -20,9 +20,9 @@ jobs:
         with:
           java-version: '11'
 
-      # Agregar permisos de ejecución a gradlew
+      # Agregar permisos de ejecución a gradlew con la ruta correcta
       - name: Grant execute permission for gradlew
-        run: chmod +x ./gradlew
+        run: chmod +x ./Proyecto_Portal_Empleado_Cliente/gradlew
 
       - name: Build Android App
         working-directory: ./Proyecto_Portal_Empleado_Cliente
