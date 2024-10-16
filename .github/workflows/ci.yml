@@ -1,6 +1,5 @@
 name: CI for Android and Java Projects
 
-# Cambia "master" a "main"
 on:
   push:
     branches:
@@ -9,36 +8,37 @@ on:
     branches:
       - main
 
-# Definimos dos jobs: uno para el cliente Android y otro para el servidor Java
 jobs:
-  # Job para construir el cliente Android
   build-android:
-    runs-on: ubuntu-latest # El job se ejecutará en una máquina virtual de Ubuntu
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2 # Este paso descarga el código de tu repositorio
+        uses: actions/checkout@v2
 
       - name: Set up JDK 11 for Android
         uses: actions/setup-java@v1
         with:
-          java-version: '11' # Configura el entorno con JDK 11
+          java-version: '11'
+
+      # Agregar permisos de ejecución a gradlew
+      - name: Grant execute permission for gradlew
+        run: chmod +x ./gradlew
 
       - name: Build Android App
-        working-directory: ./Proyecto_Portal_Empleado_Cliente # La ruta hacia tu proyecto Android
-        run: ./gradlew assembleDebug # Ejecuta el comando de Gradle para compilar el APK
+        working-directory: ./Proyecto_Portal_Empleado_Cliente
+        run: ./gradlew assembleDebug
 
-  # Job para construir el servidor Java
   build-backend:
-    runs-on: ubuntu-latest # El job se ejecutará en una máquina virtual de Ubuntu
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2 # Este paso descarga el código de tu repositorio
+        uses: actions/checkout@v2
 
       - name: Set up JDK 11 for Java
         uses: actions/setup-java@v1
         with:
-          java-version: '11' # Configura el entorno con JDK 11
+          java-version: '11'
 
       - name: Build Backend Server
-        working-directory: ./Proyecto_Portal_Empleado_Servidor # La ruta hacia tu proyecto Java
-        run: ./mvnw clean package # Ejecuta el comando Maven para compilar el backend
+        working-directory: ./Proyecto_Portal_Empleado_Servidor
+        run: ./mvnw clean package
