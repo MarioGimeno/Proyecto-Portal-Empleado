@@ -20,9 +20,14 @@ jobs:
         with:
           java-version: '11'
 
-      # Agregar permisos de ejecución a gradlew con la ruta correcta
+      # Agregar permisos de ejecución a gradlew
       - name: Grant execute permission for gradlew
         run: chmod +x ./Proyecto_Portal_Empleado_Cliente/gradlew
+
+      # Limpiar el directorio gradle antes de compilar
+      - name: Clean build files
+        working-directory: ./Proyecto_Portal_Empleado_Cliente
+        run: ./gradlew clean
 
       - name: Build Android App
         working-directory: ./Proyecto_Portal_Empleado_Cliente
