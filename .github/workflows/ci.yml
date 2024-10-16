@@ -1,13 +1,13 @@
 name: CI for Android and Java Projects
 
-# Este workflow se ejecuta cuando hay un push o un pull request a la rama master
+# Cambia "master" a "main"
 on:
   push:
     branches:
-      - master
+      - main
   pull_request:
     branches:
-      - master
+      - main
 
 # Definimos dos jobs: uno para el cliente Android y otro para el servidor Java
 jobs:
