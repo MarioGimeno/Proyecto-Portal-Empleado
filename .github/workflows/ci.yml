@@ -42,16 +42,15 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-
-      - name: Set up JDK 11 for Java backend
+  
+      - name: Set up JDK 17 for Java backend
         uses: actions/setup-java@v1
         with:
-          java-version: '11'
-
-      # Agregar permisos de ejecución a mvnw
+          java-version: '17'
+  
       - name: Grant execute permission for mvnw
         run: chmod +x ./Proyecto_Portal_Empleado_Servidor/mvnw
-
+  
       - name: Build Backend Server
         working-directory: ./Proyecto_Portal_Empleado_Servidor
         run: ./mvnw clean package
