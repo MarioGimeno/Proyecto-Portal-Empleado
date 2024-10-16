@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
 @ComponentScan("com.example.proyecto_portal_empleado.controller")
+@ComponentScan("com.example.proyecto_portal_empleado.service")
 
 @EnableJpaRepositories(basePackages = "com.example.proyecto_portal_empleado.repository")  // Aquí incluimos el paquete donde están los repositorios
 public class ProyectoPortalEmpleadoApplication {
