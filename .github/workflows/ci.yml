@@ -54,3 +54,18 @@ jobs:
       - name: Build Backend Server
         working-directory: ./Proyecto_Portal_Empleado_Servidor
         run: ./mvnw clean package
+
+      # Desplegar a EC2
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@v0.1.3
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ubuntu
+          key: ${{ secrets.EC2_SSH_KEY }}
+          port: 22
+          script: |
+            cd ~/Proyecto-Portal-Empleado
+            git pull origin main
+            sudo systemctl stop mi-aplicacion
+            mvn clean package
+            sudo systemctl start mi-aplicacion
