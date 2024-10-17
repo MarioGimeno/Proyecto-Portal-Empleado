@@ -66,6 +66,7 @@ jobs:
           script: |
             cd ~/Proyecto-Portal-Empleado
             git pull origin main
-            sudo systemctl stop proyecto-portal-empleado  # Nombre correcto del servicio
+            sudo systemctl stop Proyecto_Portal_Empleado_Servidor
             mvn clean package
-            sudo systemctl start proyecto-portal-empleado  # Nombre correcto del servicio
+            sudo systemctl start Proyecto_Portal_Empleado_Servidor
+
