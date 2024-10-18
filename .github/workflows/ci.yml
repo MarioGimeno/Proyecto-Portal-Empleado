@@ -76,3 +76,4 @@ jobs:
             mvn clean package
             # Iniciar el nuevo JAR
             nohup java -jar target/Proyecto_Portal_Empleado-0.0.1-SNAPSHOT.jar > /dev/null 2>&1 &
+            debug: true
