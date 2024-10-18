@@ -33,6 +33,7 @@ jobs:
         working-directory: ./Proyecto_Portal_Empleado_Cliente
         run: ./gradlew clean
 
+      # Compilar la aplicación Android
       - name: Build Android App
         working-directory: ./Proyecto_Portal_Empleado_Cliente
         run: ./gradlew assembleDebug
@@ -48,9 +49,11 @@ jobs:
         with:
           java-version: '17'
   
+      # Agregar permisos de ejecución para mvnw
       - name: Grant execute permission for mvnw
         run: chmod +x ./Proyecto_Portal_Empleado_Servidor/mvnw
   
+      # Compilar el backend
       - name: Build Backend Server
         working-directory: ./Proyecto_Portal_Empleado_Servidor
         run: ./mvnw clean package
@@ -66,7 +69,10 @@ jobs:
           script: |
             cd ~/Proyecto-Portal-Empleado
             git pull origin main
-            sudo systemctl stop Proyecto_Portal_Empleado_Servidor
+            # Detener el proceso JAR en ejecución
+            pkill -f 'Proyecto_Portal_Empleado-0.0.1-SNAPSHOT.jar' || true
+            # Mover al directorio del servidor y compilar
+            cd Proyecto_Portal_Empleado_Servidor
             mvn clean package
-            sudo systemctl start Proyecto_Portal_Empleado_Servidor
-
+            # Iniciar el nuevo JAR
+            nohup java -jar target/Proyecto_Portal_Empleado-0.0.1-SNAPSHOT.jar > /dev/null 2>&1 &
