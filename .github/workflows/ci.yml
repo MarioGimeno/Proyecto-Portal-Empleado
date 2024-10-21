@@ -15,7 +15,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
         with:
-          token: ${{ secrets.GITHUB_PAT }}  # Utiliza el PAT para la autenticación
+          token: ${{ secrets.PAT }}  # Utiliza el PAT para la autenticación
 
       - name: Set up JDK 17 for Android
         uses: actions/setup-java@v2
