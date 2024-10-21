@@ -69,17 +69,18 @@ jobs:
             # Matar cualquier proceso que esté ejecutando el JAR
             pkill -f 'java -jar /home/ubuntu/Proyecto-Portal-Empleado/Proyecto_Portal_Empleado-0.0.1-SNAPSHOT.jar' || echo "No process found to kill"
             
-            # Verificar si el proceso fue detenido
-            sleep 2  # Esperar unos segundos para asegurarse de que el proceso ha terminado
-            
-            # Navegar al directorio del proyecto
+            # Navegar al directorio
             cd /home/ubuntu/Proyecto-Portal-Empleado
             
-            # Ejecutar el nuevo JAR en segundo plano con salida a un archivo de logs
-            nohup java -jar Proyecto_Portal_Empleado-0.0.1-SNAPSHOT.jar > output.log 2>&1 &
-            
-            # Confirmación de que el JAR está corriendo
-            echo "Proyecto_Portal_Empleado-0.0.1-SNAPSHOT.jar ejecutado correctamente"
+            # Verificar que no haya otro proceso en el puerto 8080
+            if ! sudo ss -tulnp | grep 8080; then
+              # Ejecutar el nuevo JAR en segundo plano
+              nohup java -jar Proyecto_Portal_Empleado-0.0.1-SNAPSHOT.jar > output.log 2>&1 &
+              echo "JAR ejecutado correctamente"
+            else
+              echo "El puerto 8080 ya está ocupado"
+            fi
+
 
       # Step opcional: Verificar los logs
       - name: Check JAR logs
