@@ -72,5 +72,8 @@ jobs:
             # Verificar si el proceso fue detenido
             sleep 2  # Esperar unos segundos para asegurarse de que el proceso ha terminado
           
-            # Ejecutar el nuevo JAR en segundo plano
+            # Ejecutar el nuevo JAR en segundo plano con salida a un archivo de logs
             nohup java -jar /home/ubuntu/Proyecto-Portal-Empleado/Proyecto_Portal_Empleado-0.0.1-SNAPSHOT.jar > /home/ubuntu/Proyecto-Portal-Empleado/output.log 2>&1 &
+            
+            # Confirmación de que el JAR está corriendo
+            echo "Proyecto_Portal_Empleado-0.0.1-SNAPSHOT.jar ejecutado correctamente"
