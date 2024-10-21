@@ -79,4 +79,4 @@ jobs:
           port: 22
           use_insecure_cipher: true
           script: |
-            echo "SSH connection successful!"
+            ssh -vvv ${USERNAME}@${HOSTNAME} 'echo "SSH connection successful!"'
