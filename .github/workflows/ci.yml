@@ -58,6 +58,18 @@ jobs:
         working-directory: ./Proyecto_Portal_Empleado_Servidor
         run: ./mvnw clean package
 
+      # Prueba de conexión SSH antes del despliegue
+      - name: Test SSH Connection
+        uses: appleboy/ssh-action@v0.1.4
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 22
+          script: |
+            echo "SSH connection successful!"
+
+      # Si la conexión es exitosa, sigue con el despliegue
       - name: Deploy to Server
         uses: appleboy/ssh-action@v0.1.4
         with:
