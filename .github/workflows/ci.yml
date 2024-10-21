@@ -58,13 +58,16 @@ jobs:
         working-directory: ./Proyecto_Portal_Empleado_Servidor
         run: ./mvnw clean package
 
-      # Prueba de conexión SSH usando GitHub Secrets
-      - name: Test SSH Connection
+      - name: Run JAR on EC2
         uses: appleboy/ssh-action@v0.1.4
         with:
           host: 52.86.210.155
           username: ubuntu
-          key: ${{ secrets.SSH_PRIVATE_KEY }}  # Usa el secreto en lugar de la clave directa
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
           script: |
-            echo "SSH connection successful!"
+            # Matar cualquier proceso que esté ejecutando el JAR
+            pkill -f 'java -jar /path/to/your/server/directory/Proyecto_Portal_Empleado-0.0.1-SNAPSHOT.jar'
+
+            # Ejecutar el nuevo JAR en segundo plano
+            nohup java -jar /path/to/your/server/directory/Proyecto_Portal_Empleado-0.0.1-SNAPSHOT.jar > /dev/null 2>&1 &
