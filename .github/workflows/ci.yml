@@ -67,7 +67,7 @@ jobs:
           port: 22
           script: |
             # Matar cualquier proceso que esté ejecutando el JAR
-            pkill -f 'java -jar /home/ubuntu/Proyecto-Portal-Empleado/Proyecto_Portal_Empleado-0.0.1-SNAPSHOT.jar' || echo "No process found to kill"
+            pkill -f 'java -jar /home/ubuntu/Proyecto-Portal-Empleado/Proyecto_Portal_Empleado-0.0.1-SNAPSHOT.jar' || true
             sleep 5  # Esperar para asegurarse de que el proceso termine
 
             # Verificar si el proceso sigue corriendo
