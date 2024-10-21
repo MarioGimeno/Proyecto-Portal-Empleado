@@ -65,7 +65,7 @@ jobs:
           host: 52.86.210.155
           username: ubuntu
           key: |
-            -----BEGIN RSA PRIVATE KEY-----
+           -----BEGIN RSA PRIVATE KEY-----
             MIIEpAIBAAKCAQEAvgSFmhjTzl/iQWlt7kXTf0zCnA6n25oIArHa4SDSrOOdepnX
             aEIS32LdspGSIL+vu2+esXi+cpP4fmIsITt7m8O8uEbOSlq7uWRVCY8DgKVC+gjb
             F7/ZqZh8H+O5Xx8keERXzph8/dAMDANDBN7qHJvPLKaVRru+eOKtRpDqMvo/3dhU
@@ -79,7 +79,7 @@ jobs:
             KG1f4C43EKlfu4HHhfBNNHa57hUnlKpSfKXAqV275VaTvfO/9msxoJ509lKWhTVi
             kPASozX9AoGBAOfplRUWIXKN7c78YQ254W/CPc7l58uJ4ib/rFBOiZHNQR2AO7aw
             OYjpxPi63s2zXrCnLQ8qVieVlz+En/MIpU6AO9Qm46Lyy+AEFAjN4WYwFMEeQylb
-            Kpr5owaiaEjNaZedgeVxH6JmcFXmtT11xHNFv+JwFQT6cBaOFznFhHefAoGBANHA
+            Kpr5owaiaEjNaZEdgeVxH6JmcFXmtT11xHNFv+JwFQT6cBaOFznFhHefAoGBANHA
             +1qSbwyHq9IbfLuXWy8NTDKNxlXoqorQTsmFCG85HMnk3cuEny2J65AfaA5LDCtH
             7zw6wMLNGf6sweUCcXHDTV+8dPLhUz+/TamDdBTQsyj6dr4JZBI2CH464ElB7NI0
             FdP9Pb2DaKBkB1pwPRMBHXQCbyz/QzEAJ6HcLY9rAoGBAKox4hb3htRrFHsy/Ib2
