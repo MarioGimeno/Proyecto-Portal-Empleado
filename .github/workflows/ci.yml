@@ -16,24 +16,21 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Set up JDK 17 for Android
-        uses: actions/setup-java@v1
+        uses: actions/setup-java@v2 # Actualizado a la versión más reciente
         with:
+          distribution: 'temurin' # Especificación del distribuidor de Java
           java-version: '17'
 
-      # Agregar permisos de ejecución a gradlew
       - name: Grant execute permission for gradlew
         run: chmod +x ./Proyecto_Portal_Empleado_Cliente/gradlew
 
-      # Eliminar el directorio .gradle antes de compilar
       - name: Delete .gradle directory
         run: rm -rf ./Proyecto_Portal_Empleado_Cliente/.gradle
 
-      # Limpiar el directorio gradle antes de compilar
       - name: Clean build files
         working-directory: ./Proyecto_Portal_Empleado_Cliente
         run: ./gradlew clean
 
-      # Compilar la aplicación Android
       - name: Build Android App
         working-directory: ./Proyecto_Portal_Empleado_Cliente
         run: ./gradlew assembleDebug
@@ -45,35 +42,30 @@ jobs:
         uses: actions/checkout@v2
   
       - name: Set up JDK 17 for Java backend
-        uses: actions/setup-java@v1
+        uses: actions/setup-java@v2 # Actualizado a la versión más reciente
         with:
+          distribution: 'temurin' # Especificación del distribuidor de Java
           java-version: '17'
   
-      # Agregar permisos de ejecución para mvnw
       - name: Grant execute permission for mvnw
         run: chmod +x ./Proyecto_Portal_Empleado_Servidor/mvnw
   
-      # Compilar el backend
       - name: Build Backend Server
         working-directory: ./Proyecto_Portal_Empleado_Servidor
         run: ./mvnw clean package
 
-      # Desplegar a EC2
       - name: Deploy to EC2
         uses: appleboy/ssh-action@v0.1.5
         with:
           host: ${{ secrets.EC2_HOST }}
-          username: ubuntu
+          username: ${{ secrets.USERNAME }} # Asegúrate de tener este secreto configurado
           key: ${{ secrets.EC2_SSH_KEY }}
           port: 22
           script: |
             cd ~/Proyecto-Portal-Empleado
             git pull origin main
-            # Detener el proceso JAR en ejecución
             pkill -f 'Proyecto_Portal_Empleado-0.0.1-SNAPSHOT.jar' || true
-            # Mover al directorio del servidor y compilar
             cd Proyecto_Portal_Empleado_Servidor
             mvn clean package
-            # Iniciar el nuevo JAR
             nohup java -jar target/Proyecto_Portal_Empleado-0.0.1-SNAPSHOT.jar > /dev/null 2>&1 &
             debug: true
