@@ -16,9 +16,9 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Set up JDK 17 for Android
-        uses: actions/setup-java@v2 # Actualizado a la versión más reciente
+        uses: actions/setup-java@v2
         with:
-          distribution: 'temurin' # Especificación del distribuidor de Java
+          distribution: 'temurin'
           java-version: '17'
 
       - name: Grant execute permission for gradlew
@@ -42,9 +42,9 @@ jobs:
         uses: actions/checkout@v2
   
       - name: Set up JDK 17 for Java backend
-        uses: actions/setup-java@v2 # Actualizado a la versión más reciente
+        uses: actions/setup-java@v2
         with:
-          distribution: 'temurin' # Especificación del distribuidor de Java
+          distribution: 'temurin'
           java-version: '17'
   
       - name: Grant execute permission for mvnw
@@ -58,11 +58,13 @@ jobs:
         uses: appleboy/ssh-action@v0.1.5
         with:
           host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.USERNAME }} # Asegúrate de tener este secreto configurado
+          username: ${{ secrets.USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
           port: 22
           script: |
+            # Asegúrate de que la URL de origen esté configurada para usar SSH
             cd ~/Proyecto-Portal-Empleado
+            git remote set-url origin git@github.com:tu-usuario/tu-repositorio.git
             git pull origin main
             pkill -f 'Proyecto_Portal_Empleado-0.0.1-SNAPSHOT.jar' || true
             cd Proyecto_Portal_Empleado_Servidor
