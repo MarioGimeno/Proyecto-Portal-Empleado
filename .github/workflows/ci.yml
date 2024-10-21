@@ -66,52 +66,28 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
           script: |
-            # Encontrar el proceso del JAR y matarlo si existe
-            PID=$(pgrep -f 'java -jar /home/ubuntu/Proyecto-Portal-Empleado/Proyecto_Portal_Empleado-0.0.1-SNAPSHOT.jar')
-            if [ -n "$PID" ]; then
-              echo "Matando el proceso con PID $PID"
-              kill -9 $PID  # Usamos kill -9 para forzar la terminación inmediata del proceso
-              KILL_EXIT_CODE=$?  # Capturamos el código de salida de kill
-              sleep 5  # Esperar para asegurarse de que el proceso termine
-
-              # Ignorar el código de salida 137 (SIGKILL) o 0
-              if [ $KILL_EXIT_CODE -eq 137 ] || [ $KILL_EXIT_CODE -eq 0 ]; then
-                echo "Proceso detenido correctamente"
-              else
-                echo "Error al intentar detener el proceso con PID $PID"
-                exit 1
-              fi
-            else
-              echo "No se encontró ningún proceso ejecutando el JAR"
-            fi
-
-            # Navegar al directorio y limpiar archivos antiguos de logs
-            cd /home/ubuntu/Proyecto-Portal-Empleado
-            rm -f nohup.out output.log
-
-            # Verificar que no haya otro proceso en el puerto 8080 con un timeout de espera
-            TIMEOUT=60
-            while sudo ss -tulnp | grep 8080; do
-              echo "El puerto 8080 está ocupado. Esperando..."
-              sleep 5
-              TIMEOUT=$((TIMEOUT-5))
-              if [ $TIMEOUT -le 0 ]; then
-                echo "Timeout: El puerto 8080 sigue ocupado después de 60 segundos."
-                exit 1
-              fi
-            done
-
-            # Ejecutar el nuevo JAR en segundo plano
-            nohup java -jar Proyecto_Portal_Empleado-0.0.1-SNAPSHOT.jar > output.log 2>&1 &
-            sleep 5  # Esperar unos segundos para asegurarse de que el proceso arranca
-
-            # Verificar si el JAR está corriendo
-            if pgrep -f 'java -jar /home/ubuntu/Proyecto-Portal-Empleado/Proyecto_Portal_Empleado-0.0.1-SNAPSHOT.jar'; then
-              echo "JAR ejecutado correctamente."
-              echo "Los logs están siendo registrados en /home/ubuntu/Proyecto-Portal-Empleado/output.log"
-            else
-              echo "Error al ejecutar el JAR."
+            # Verificar si el puerto 8080 ya está en uso
+            if sudo ss -tulnp | grep 8080; then
+              echo "El puerto 8080 ya está ocupado. No se puede iniciar el nuevo JAR."
               exit 1
+            else
+              echo "El puerto 8080 está libre. Iniciando el nuevo JAR."
+              # Navegar al directorio y limpiar archivos antiguos de logs
+              cd /home/ubuntu/Proyecto-Portal-Empleado
+              rm -f nohup.out output.log
+
+              # Ejecutar el nuevo JAR en segundo plano
+              nohup java -jar Proyecto_Portal_Empleado-0.0.1-SNAPSHOT.jar > output.log 2>&1 &
+              sleep 5  # Esperar unos segundos para asegurarse de que el proceso arranca
+
+              # Verificar si el JAR está corriendo
+              if pgrep -f 'java -jar /home/ubuntu/Proyecto-Portal-Empleado/Proyecto_Portal_Empleado-0.0.1-SNAPSHOT.jar'; then
+                echo "JAR ejecutado correctamente."
+                echo "Los logs están siendo registrados en /home/ubuntu/Proyecto-Portal-Empleado/output.log"
+              else
+                echo "Error al ejecutar el JAR."
+                exit 1
+              fi
             fi
 
       - name: Check JAR logs
@@ -123,4 +99,3 @@ jobs:
           port: 22
           script: |
             cat /home/ubuntu/Proyecto-Portal-Empleado/output.log
-
