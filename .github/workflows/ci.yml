@@ -14,6 +14,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.GITHUB_PAT }}  # Utiliza el PAT para la autenticación
 
       - name: Set up JDK 17 for Android
         uses: actions/setup-java@v2
@@ -40,7 +42,9 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-  
+        with:
+          token: ${{ secrets.PAT }}  # Utiliza el PAT para la autenticación
+
       - name: Set up JDK 17 for Java backend
         uses: actions/setup-java@v2
         with:
@@ -53,21 +57,3 @@ jobs:
       - name: Build Backend Server
         working-directory: ./Proyecto_Portal_Empleado_Servidor
         run: ./mvnw clean package
-
-      - name: Deploy to EC2
-        uses: appleboy/ssh-action@v0.1.5
-        with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.EC2_SSH_KEY }}
-          port: 22
-          script: |
-            # Asegúrate de que la URL de origen esté configurada para usar SSH
-            cd ~/Proyecto-Portal-Empleado
-            git remote set-url origin git@github.com:tu-usuario/tu-repositorio.git
-            git pull origin main
-            pkill -f 'Proyecto_Portal_Empleado-0.0.1-SNAPSHOT.jar' || true
-            cd Proyecto_Portal_Empleado_Servidor
-            mvn clean package
-            nohup java -jar target/Proyecto_Portal_Empleado-0.0.1-SNAPSHOT.jar > /dev/null 2>&1 &
-            debug: true
