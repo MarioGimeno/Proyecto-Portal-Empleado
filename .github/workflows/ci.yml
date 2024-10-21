@@ -58,12 +58,40 @@ jobs:
         working-directory: ./Proyecto_Portal_Empleado_Servidor
         run: ./mvnw clean package
 
+      # Prueba de conexión SSH con los detalles proporcionados
       - name: Test SSH Connection
         uses: appleboy/ssh-action@v0.1.4
         with:
-          host: ${{ secrets.SERVER_HOST }}
-          username: ${{ secrets.SERVER_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          host: 52.86.210.155
+          username: ubuntu
+          key: |
+            -----BEGIN RSA PRIVATE KEY-----
+            MIIEpAIBAAKCAQEAvgSFmhjTzl/iQWlt7kXTf0zCnA6n25oIArHa4SDSrOOdepnX
+            aEIS32LdspGSIL+vu2+esXi+cpP4fmIsITt7m8O8uEbOSlq7uWRVCY8DgKVC+gjb
+            F7/ZqZh8H+O5Xx8keERXzph8/dAMDANDBN7qHJvPLKaVRru+eOKtRpDqMvo/3dhU
+            A6dCF1dEw+dPlV3XUfDyhFlCHQXFmHJsu/BxbmfQFSWibVmUYDZe3RI6RqOqpmCU
+            lMtzN/eBtFGDHDz2Ga7+qI1laOYB4MlTpCVyEPM7ucN7iHB+371FUw6fA5rh2rwA
+            BCp6I4rE58eZA8udHTL9zPLqz1Fcyv2POCLQdQIDAQABAoIBAQC0H/s5+WEG2BPV
+            qAiCf4SevvgYETiDzn7bdxeio4eyRk5pAt6UQVY8li7McHwSOUNvrb7EQ05dtPEx
+            dQSaOBXTsXf7Q3uYNmyPsJF/7ycF0yMrfCucVswRna/EVw3JIu9iZn7KI/kQbSCO
+            XqUwP9OzbOu2Su9kzuIfG9nf881epgIpKHRK+MfApbE6iwjRGqDD1Kud/mqHzyC2
+            vo5EIgnyRbpi8Au3JEm7RZ96pKfqVJd4WO37n+q6KdIjk+gY6JzONKMD0C0avnFo
+            KG1f4C43EKlfu4HHhfBNNHa57hUnlKpSfKXAqV275VaTvfO/9msxoJ509lKWhTVi
+            kPASozX9AoGBAOfplRUWIXKN7c78YQ254W/CPc7l58uJ4ib/rFBOiZHNQR2AO7aw
+            OYjpxPi63s2zXrCnLQ8qVieVlz+En/MIpU6AO9Qm46Lyy+AEFAjN4WYwFMEeQylb
+            Kpr5owaiaEjNaZedgeVxH6JmcFXmtT11xHNFv+JwFQT6cBaOFznFhHefAoGBANHA
+            +1qSbwyHq9IbfLuXWy8NTDKNxlXoqorQTsmFCG85HMnk3cuEny2J65AfaA5LDCtH
+            7zw6wMLNGf6sweUCcXHDTV+8dPLhUz+/TamDdBTQsyj6dr4JZBI2CH464ElB7NI0
+            FdP9Pb2DaKBkB1pwPRMBHXQCbyz/QzEAJ6HcLY9rAoGBAKox4hb3htRrFHsy/Ib2
+            Q1uhUXrlfpcBOdclC3BkMtGtsHvV//yyl4bDCKsBeUG8wWEjTw4yI8gpIDadPkU9
+            sxNJSJ8Ja0XKqZRdadaMQT6dSp3vd5qCLWJOkjXsOlwzY6X74bhgrLaiNw7ToW7Z
+            XrK6HXgwiTx+DoR/AsyDCBRBAoGAE5crorz0hD4TrS8GCltLl+xtBne5Y4K0kvx7
+            r1SugfzalHy8vmpnl5A/IRnd1R/rRguU65ItOMSBPgkSnvoIcHCmRF/MqHalGNoc
+            Pc3aRKttYFFsT7l+0DiduHR1SEJRBRz6QO9xGccxOXG+QhMjkSfUgWZMze4Vb3kt
+            Om/fDXsCgYBsWFJ2MMgRPPoTEYH2rdhQeBDnCEu7CiU2Qp+oslV3MWbm9dRU/X4G
+            HysgHoVh39k1airQfhmobt7bJAUg5r2JKxeR06rzrT01WcI8M7jb+OyGtFnFtHTk
+            Wm5MZ/EpbyEwdrkXjhWteb1GHH/ROM8ul8raf2/hQoCIYu3WeUyYQA==
+            -----END RSA PRIVATE KEY-----
           port: 22
           script: |
             echo "SSH connection successful!"
