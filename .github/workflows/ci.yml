@@ -70,15 +70,13 @@ jobs:
             echo "SSH connection successful!"
 
       # Si la conexión es exitosa, sigue con el despliegue
-      - name: Deploy to Server
+      - name: Test SSH Connection
         uses: appleboy/ssh-action@v0.1.4
         with:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
+          use_insecure_cipher: true
           script: |
-            # Transfiere el archivo JAR al servidor
-            scp ./Proyecto_Portal_Empleado_Servidor/target/Proyecto_Portal_Empleado-0.0.1-SNAPSHOT.jar ${USERNAME}@${HOSTNAME}:/path/to/your/server/directory
-            # Reiniciar el servicio si es necesario (opcional)
-            ssh ${USERNAME}@${HOSTNAME} 'sudo systemctl restart your-service-name'
+            echo "SSH connection successful!"
