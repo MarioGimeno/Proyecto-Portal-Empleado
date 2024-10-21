@@ -94,7 +94,7 @@ jobs:
             -----END RSA PRIVATE KEY-----
           port: 22
           script: |
-            echo "SSH connection successful!"
+            ssh -vvv ${USERNAME}@${HOSTNAME} 'echo "SSH connection successful!"'
 
       # Si la conexión es exitosa, sigue con el despliegue
       - name: Deploy to Server
@@ -109,5 +109,5 @@ jobs:
             -----END RSA PRIVATE KEY-----
           port: 22
           script: |
-            scp ./Proyecto_Portal_Empleado_Servidor/target/Proyecto_Portal_Empleado-0.0.1-SNAPSHOT.jar ${USERNAME}@${HOSTNAME}:/path/to/your/server/directory
-            ssh ${USERNAME}@${HOSTNAME} 'sudo systemctl restart your-service-name'
+            ssh -vvv ${USERNAME}@${HOSTNAME} 'echo "SSH connection successful!"'
+
