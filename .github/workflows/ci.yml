@@ -74,8 +74,8 @@ jobs:
               KILL_EXIT_CODE=$?  # Capturamos el código de salida de kill
               sleep 5  # Esperar para asegurarse de que el proceso termine
 
-              # Manejo de cualquier código de salida
-              if [ $KILL_EXIT_CODE -eq 0 ]; then
+              # Ignorar el código de salida 137 (SIGKILL) o 0
+              if [ $KILL_EXIT_CODE -eq 137 ] || [ $KILL_EXIT_CODE -eq 0 ]; then
                 echo "Proceso detenido correctamente"
               else
                 echo "Error al intentar detener el proceso con PID $PID"
@@ -114,7 +114,6 @@ jobs:
               exit 1
             fi
 
-      # Step opcional: Verificar los logs
       - name: Check JAR logs
         uses: appleboy/ssh-action@v0.1.4
         with:
@@ -124,3 +123,4 @@ jobs:
           port: 22
           script: |
             cat /home/ubuntu/Proyecto-Portal-Empleado/output.log
+
