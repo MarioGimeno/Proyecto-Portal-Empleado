@@ -114,16 +114,4 @@ jobs:
             git pull origin main
             rm ~/.git-credentials  # Limpia el archivo de credenciales después de la operación
 
-      - name: Build and run Docker container on EC2
-        uses: appleboy/ssh-action@v0.1.4
-        with:
-          host: 52.86.210.155
-          username: ubuntu
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: 22
-          script: |
-            cd /home/ubuntu/Proyecto-Portal-Empleado/Proyecto_Portal_Empleado_Servidor
-            docker build -t proyecto-portal-empleado .
-            docker stop proyecto-portal-empleado-container || true
-            docker rm proyecto-portal-empleado-container || true
-            docker run -d -p 8080:8080 --name proyecto-portal-empleado-container proyecto-portal-empleado
+     
