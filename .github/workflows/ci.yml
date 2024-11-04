@@ -71,35 +71,14 @@ jobs:
               echo "Directorio existente. Ejecutando git pull..."
               cd Proyecto-Portal-Empleado
               git config --global credential.helper store
-              echo "https://${{ secrets.EC2_PAT }}:@github.com" > ~/.git-credentials  # Crea en /home/ubuntu
+              printf "https://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:@github.com" > ~/.git-credentials  # Usa printf para crear el archivo correctamente 
               git remote set-url origin https://github.com/MarioGimeno/Proyecto-Portal-Empleado.git  # Cambio a HTTPS
               git pull origin main
-            else
-              echo "Directorio no existe. Clonando el repositorio..."
-              git clone https://github.com/MarioGimeno/Proyecto-Portal-Empleado.git 
-            fi
-
-      - name: Pull or clone latest code on EC2
-        uses: appleboy/ssh-action@v0.1.4
-        with:
-          host: 52.86.210.155
-          username: ubuntu
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: 22
-          script: |
-            ssh-keyscan -H github.com >> ~/.ssh/known_hosts
-            cd /home/ubuntu
-            if [ -d "Proyecto-Portal-Empleado" ]; then
-              echo "Directorio existente. Ejecutando git pull..."
-              cd Proyecto-Portal-Empleado
-              git config --global credential.helper store
-              git remote set-url origin https://github.com/MarioGimeno/Proyecto-Portal-Empleado.git  # Cambio a HTTPS
-              git pull origin main
+              rm ~/.git-credentials  # Limpia el archivo después de usarlo para mayor seguridad
             else
               echo "Directorio no existe. Clonando el repositorio..."
               git clone https://github.com/MarioGimeno/Proyecto-Portal-Empleado.git
             fi
-
 
       - name: Check JAR logs
         uses: appleboy/ssh-action@v0.1.4
