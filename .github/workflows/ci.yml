@@ -82,7 +82,6 @@ jobs:
               git clone https://github.com/MarioGimeno/Proyecto-Portal-Empleado.git
             fi
 
-      # Elimina el paso de ejecución del JAR si ya estás usando Docker
       - name: Build and run Docker container on EC2
         uses: appleboy/ssh-action@v0.1.4
         with:
@@ -92,6 +91,11 @@ jobs:
           port: 22
           script: |
             cd /home/ubuntu/Proyecto-Portal-Empleado/Proyecto_Portal_Empleado_Servidor
+            if ! docker images | grep -q proyecto-portal-empleado; then
+              echo "La imagen no existe. Construyéndola..."
+              docker build -t proyecto-portal-empleado .
+            fi
+
             if ! docker ps -a | grep -q proyecto-portal-empleado-container; then
               echo "El contenedor no existe. Creando y ejecutando..."
               docker run -d -p 8080:8080 --name proyecto-portal-empleado-container proyecto-portal-empleado
