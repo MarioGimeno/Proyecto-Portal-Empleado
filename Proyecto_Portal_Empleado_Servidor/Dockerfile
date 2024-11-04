@@ -1,23 +1,29 @@
-# Usar una imagen base oficial de JDK que incluya herramientas de compilación
+# Usar una imagen base oficial de Maven con OpenJDK 17 para la compilación
 FROM maven:3.8.4-openjdk-17 as build
 
-# Establecer el directorio de trabajo en el contenedor
+# Establecer el directorio de trabajo en el contenedor de compilación
 WORKDIR /app
 
-# Copiar los archivos de configuración de Maven y el código fuente en el contenedor
+# Copiar el archivo de configuración de Maven y las dependencias
 COPY pom.xml .
+
+# Descargar dependencias de Maven para evitar reconstrucciones innecesarias
+RUN mvn dependency:go-offline -B
+
+# Copiar el resto del código fuente
 COPY src ./src
 
-# Construir la aplicación usando Maven
-RUN mvn clean package
+# Compilar la aplicación y generar el archivo JAR
+RUN mvn clean package -DskipTests
 
-# Usar una imagen base más ligera para el contenedor de ejecución
-FROM openjdk:17-slim  # Cambiado a una versión disponible
+# Usar una imagen base de OpenJDK más ligera para la ejecución
+FROM openjdk:17-slim
 
+# Establecer el directorio de trabajo en el contenedor de ejecución
 WORKDIR /app
 
-# Copiar el JAR compilado desde la etapa de construcción a la etapa de ejecución
-COPY --from=build /app/target/your-jar-file.jar app.jar  # Cambia `your-jar-file.jar` por el nombre de tu JAR
+# Copiar el archivo JAR desde el contenedor de compilación
+COPY --from=build /app/target/Proyecto_Portal_Empleado-0.0.1-SNAPSHOT.jar app.jar
 
 # Exponer el puerto que utiliza tu aplicación
 EXPOSE 8080
