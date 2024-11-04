@@ -12,12 +12,12 @@ COPY src ./src
 RUN mvn clean package
 
 # Usar una imagen base más ligera para el contenedor de ejecución
-FROM openjdk:17-jre-slim
+FROM openjdk:17-slim  # Cambiado a una versión disponible
 
 WORKDIR /app
 
 # Copiar el JAR compilado desde la etapa de construcción a la etapa de ejecución
-COPY --from=build /app/target/*.jar app.jar
+COPY --from=build /app/target/your-jar-file.jar app.jar  # Cambia `your-jar-file.jar` por el nombre de tu JAR
 
 # Exponer el puerto que utiliza tu aplicación
 EXPOSE 8080
