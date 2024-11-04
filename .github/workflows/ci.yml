@@ -79,7 +79,7 @@ jobs:
               git clone https://github.com/MarioGimeno/Proyecto-Portal-Empleado.git 
             fi
 
-      - name: Run JAR on EC2
+      - name: Pull or clone latest code on EC2
         uses: appleboy/ssh-action@v0.1.4
         with:
           host: 52.86.210.155
@@ -87,29 +87,20 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
           script: |
-            # Verificar si el puerto 8080 ya está en uso
-            if sudo ss -tulnp | grep 8080; then
-              echo "El puerto 8080 ya está ocupado. No se puede iniciar el nuevo JAR."
-              exit 1
+            ssh-keyscan -H github.com >> ~/.ssh/known_hosts
+            cd /home/ubuntu
+            if [ -d "Proyecto-Portal-Empleado" ]; then
+              echo "Directorio existente. Ejecutando git pull..."
+              cd Proyecto-Portal-Empleado
+              git config --global credential.helper store
+              echo -n "https://${{ secrets.EC2_PAT }}:@github.com" > ~/.git-credentials  # Crea en una sola línea sin salto de línea
+              git remote set-url origin https://github.com/MarioGimeno/Proyecto-Portal-Empleado.git  # Cambio a HTTPS
+              git pull origin main
             else
-              echo "El puerto 8080 está libre. Iniciando el nuevo JAR."
-              # Navegar al directorio y limpiar archivos antiguos de logs
-              cd /home/ubuntu/Proyecto-Portal-Empleado
-              rm -f nohup.out output.log
-
-              # Ejecutar el nuevo JAR en segundo plano
-              nohup java -jar Proyecto_Portal_Empleado-0.0.1-SNAPSHOT.jar > output.log 2>&1 &
-              sleep 5  # Esperar unos segundos para asegurarse de que el proceso arranca
-
-              # Verificar si el JAR está corriendo
-              if pgrep -f 'java -jar /home/ubuntu/Proyecto-Portal-Empleado/Proyecto_Portal_Empleado-0.0.1-SNAPSHOT.jar'; then
-                echo "JAR ejecutado correctamente."
-                echo "Los logs están siendo registrados en /home/ubuntu/Proyecto-Portal-Empleado/output.log"
-              else
-                echo "Error al ejecutar el JAR."
-                exit 1
-              fi
+              echo "Directorio no existe. Clonando el repositorio..."
+              git clone https://github.com/MarioGimeno/Proyecto-Portal-Empleado.git
             fi
+
 
       - name: Check JAR logs
         uses: appleboy/ssh-action@v0.1.4
