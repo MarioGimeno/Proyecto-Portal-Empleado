@@ -83,8 +83,7 @@ jobs:
             fi
 
       # Elimina el paso de ejecución del JAR si ya estás usando Docker
-
-      - name: Check Docker container status
+      - name: Build and run Docker container on EC2
         uses: appleboy/ssh-action@v0.1.4
         with:
           host: 52.86.210.155
@@ -92,9 +91,16 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
           script: |
-            if ! docker ps | grep -q proyecto-portal-empleado-container; then
-              echo "El contenedor no está corriendo. Reiniciando..."
-              docker start proyecto-portal-empleado-container
+            cd /home/ubuntu/Proyecto-Portal-Empleado/Proyecto_Portal_Empleado_Servidor
+            if ! docker ps -a | grep -q proyecto-portal-empleado-container; then
+              echo "El contenedor no existe. Creando y ejecutando..."
+              docker run -d -p 8080:8080 --name proyecto-portal-empleado-container proyecto-portal-empleado
             else
-              echo "El contenedor está corriendo."
+              echo "El contenedor existe. Verificando si está corriendo..."
+              if ! docker ps | grep -q proyecto-portal-empleado-container; then
+                echo "El contenedor no está corriendo. Iniciando..."
+                docker start proyecto-portal-empleado-container
+              else
+                echo "El contenedor ya está corriendo."
+              fi
             fi
