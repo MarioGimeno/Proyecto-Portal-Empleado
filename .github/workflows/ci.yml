@@ -93,7 +93,6 @@ jobs:
               echo "Directorio existente. Ejecutando git pull..."
               cd Proyecto-Portal-Empleado
               git config --global credential.helper store
-              echo -n "https://${{ secrets.EC2_PAT }}:@github.com" > ~/.git-credentials  # Crea en una sola línea sin salto de línea
               git remote set-url origin https://github.com/MarioGimeno/Proyecto-Portal-Empleado.git  # Cambio a HTTPS
               git pull origin main
             else
