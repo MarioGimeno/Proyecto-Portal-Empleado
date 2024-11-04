@@ -108,4 +108,7 @@ jobs:
           port: 22
           script: |
             cd /home/ubuntu/Proyecto-Portal-Empleado
-            git pull origin main  # Asegúrate de que tu instancia tenga acceso al repositorio
+            git config --global credential.helper store
+            echo "https://${{ secrets.EC2_PAT }}:@github.com" > ~/.git-credentials
+            git pull origin main
+            rm ~/.git-credentials  # Limpia el archivo de credenciales después de la operación
