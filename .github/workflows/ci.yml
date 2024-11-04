@@ -99,3 +99,13 @@ jobs:
           port: 22
           script: |
             cat /home/ubuntu/Proyecto-Portal-Empleado/output.log
+      - name: Pull latest code on EC2
+        uses: appleboy/ssh-action@v0.1.4
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ubuntu
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 22
+          script: |
+            cd /home/ubuntu/Proyecto-Portal-Empleado
+            git pull origin main  # Asegúrate de que tu instancia tenga acceso al repositorio
