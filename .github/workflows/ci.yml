@@ -73,6 +73,7 @@ jobs:
               cd Proyecto-Portal-Empleado
               git config --global credential.helper store
               echo "https://${{ secrets.EC2_PAT }}:@github.com" > ~/.git-credentials  # Crea en /home/ubuntu
+              git remote set-url origin https://github.com/<owner>/<repo>.git  # Cambio a HTTPS
               git pull origin main
               rm ~/.git-credentials  # Limpia el archivo de credenciales después de la operación
             else
