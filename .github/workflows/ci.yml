@@ -12,10 +12,12 @@ jobs:
   build-android:
     runs-on: ubuntu-latest
     steps:
+      # Pasos para construir la app de Android
       - name: Checkout code
         uses: actions/checkout@v2
         with:
-          token: ${{ secrets.PAT }}  # Utiliza el PAT para la autenticación
+          token: ${{ secrets.PAT }}
+
       - name: Set up JDK 17 for Android
         uses: actions/setup-java@v2
         with:
@@ -39,10 +41,11 @@ jobs:
   build-backend:
     runs-on: ubuntu-latest
     steps:
+      # Pasos para construir el servidor backend
       - name: Checkout code
         uses: actions/checkout@v2
         with:
-          token: ${{ secrets.PAT }}  # Utiliza el PAT para la autenticación
+          token: ${{ secrets.PAT }}
 
       - name: Set up JDK 17 for Java backend
         uses: actions/setup-java@v2
@@ -71,16 +74,17 @@ jobs:
               echo "Directorio existente. Ejecutando git pull..."
               cd Proyecto-Portal-Empleado
               git config --global credential.helper store
-              printf "https://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:@github.com" > ~/.git-credentials  # Usa printf para crear el archivo correctamente 
-              git remote set-url origin https://github.com/MarioGimeno/Proyecto-Portal-Empleado.git  # Cambio a HTTPS
+              echo "https://${{ secrets.EC2_PAT }}:@github.com" > ~/.git-credentials
+              git remote set-url origin https://github.com/MarioGimeno/Proyecto-Portal-Empleado.git
               git pull origin main
-              rm ~/.git-credentials  # Limpia el archivo después de usarlo para mayor seguridad
             else
               echo "Directorio no existe. Clonando el repositorio..."
               git clone https://github.com/MarioGimeno/Proyecto-Portal-Empleado.git
             fi
 
-      - name: Check JAR logs
+      # Elimina el paso de ejecución del JAR si ya estás usando Docker
+
+      - name: Check Docker container status
         uses: appleboy/ssh-action@v0.1.4
         with:
           host: 52.86.210.155
@@ -88,4 +92,9 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
           script: |
-            cat /home/ubuntu/Proyecto-Portal-Empleado/output.log
+            if ! docker ps | grep -q proyecto-portal-empleado-container; then
+              echo "El contenedor no está corriendo. Reiniciando..."
+              docker start proyecto-portal-empleado-container
+            else
+              echo "El contenedor está corriendo."
+            fi
