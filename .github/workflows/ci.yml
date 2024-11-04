@@ -58,6 +58,28 @@ jobs:
         working-directory: ./Proyecto_Portal_Empleado_Servidor
         run: ./mvnw clean package
 
+      - name: Pull or clone latest code on EC2
+        uses: appleboy/ssh-action@v0.1.4
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ubuntu
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 22
+          script: |
+            ssh-keyscan -H github.com >> ~/.ssh/known_hosts
+            cd /home/ubuntu
+            if [ -d "Proyecto-Portal-Empleado" ]; then
+              echo "Directorio existente. Ejecutando git pull..."
+              cd Proyecto-Portal-Empleado
+              git config --global credential.helper store
+              echo "https://${{ secrets.EC2_PAT }}:@github.com" > ~/.git-credentials  # Crea en /home/ubuntu
+              git pull origin main
+              rm ~/.git-credentials  # Limpia el archivo de credenciales después de la operación
+            else
+              echo "Directorio no existe. Clonando el repositorio..."
+              git clone https://github.com/<owner>/<repo>.git Proyecto-Portal-Empleado
+            fi
+
       - name: Run JAR on EC2
         uses: appleboy/ssh-action@v0.1.4
         with:
@@ -99,18 +121,3 @@ jobs:
           port: 22
           script: |
             cat /home/ubuntu/Proyecto-Portal-Empleado/output.log
-
-      - name: Pull latest code on EC2
-        uses: appleboy/ssh-action@v0.1.4
-        with:
-          host: 52.86.210.155
-          username: ubuntu
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: 22
-          script: |
-            ssh-keyscan -H github.com >> ~/.ssh/known_hosts
-            cd /home/ubuntu/Proyecto-Portal-Empleado
-            git config --global credential.helper store
-            echo "https://${{ secrets.EC2_PAT }}:@github.com" > ~/.git-credentials
-            git pull origin main
-            rm ~/.git-credentials  # Limpia el archivo de credenciales después de la operación
