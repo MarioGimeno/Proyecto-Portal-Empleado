@@ -103,17 +103,14 @@ jobs:
       - name: Pull latest code on EC2
         uses: appleboy/ssh-action@v0.1.4
         with:
-          host: ${{ secrets.EC2_HOST }}
+          host: 52.86.210.155
           username: ubuntu
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
           script: |
-            # Agregar la clave del host de GitHub al archivo known_hosts
             ssh-keyscan -H github.com >> ~/.ssh/known_hosts
             cd /home/ubuntu/Proyecto-Portal-Empleado
             git config --global credential.helper store
-            echo "https://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:@github.com" > ~/.git-credentials
+            echo "https://${{ secrets.EC2_PAT }}:@github.com" > ~/.git-credentials
             git pull origin main
             rm ~/.git-credentials  # Limpia el archivo de credenciales después de la operación
-
-     
