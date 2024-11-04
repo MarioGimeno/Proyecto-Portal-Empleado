@@ -74,7 +74,6 @@ jobs:
               echo "https://${{ secrets.EC2_PAT }}:@github.com" > ~/.git-credentials  # Crea en /home/ubuntu
               git remote set-url origin https://github.com/MarioGimeno/Proyecto-Portal-Empleado.git  # Cambio a HTTPS
               git pull origin main
-              rm ~/.git-credentials  # Limpia el archivo de credenciales después de la operación
             else
               echo "Directorio no existe. Clonando el repositorio..."
               git clone https://github.com/MarioGimeno/Proyecto-Portal-Empleado.git 
