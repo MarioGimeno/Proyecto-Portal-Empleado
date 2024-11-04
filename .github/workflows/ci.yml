@@ -112,7 +112,7 @@ jobs:
             ssh-keyscan -H github.com >> ~/.ssh/known_hosts
             cd /home/ubuntu/Proyecto-Portal-Empleado
             git config --global credential.helper store
-            echo "https://${{ secrets.EC2_PAT }}:@github.com" > ~/.git-credentials
+            echo "https://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:@github.com" > ~/.git-credentials
             git pull origin main
             rm ~/.git-credentials  # Limpia el archivo de credenciales después de la operación
 
