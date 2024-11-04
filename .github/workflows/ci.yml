@@ -78,7 +78,7 @@ jobs:
               rm ~/.git-credentials  # Limpia el archivo de credenciales después de la operación
             else
               echo "Directorio no existe. Clonando el repositorio..."
-              git clone https://github.com/MarioGimeno/Proyecto-Portal-Empleado.git Proyecto-Portal-Empleado
+              git clone https://github.com/MarioGimeno/Proyecto-Portal-Empleado.git 
             fi
 
       - name: Run JAR on EC2
