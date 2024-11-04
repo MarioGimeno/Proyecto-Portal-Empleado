@@ -61,7 +61,7 @@ jobs:
       - name: Pull or clone latest code on EC2
         uses: appleboy/ssh-action@v0.1.4
         with:
-          host: ${{ secrets.EC2_HOST }}
+          host: 52.86.210.155
           username: ubuntu
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
