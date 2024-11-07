@@ -63,7 +63,7 @@ jobs:
       - name: Pull or clone latest code on EC2
         uses: appleboy/ssh-action@v0.1.4
         with:
-          host: 00.27.221.107
+          host: 100.27.221.107 
           username: ubuntu
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
@@ -85,7 +85,7 @@ jobs:
       - name: Build and run Docker container on EC2
         uses: appleboy/ssh-action@v0.1.4
         with:
-          host: 00.27.221.107
+          host: 100.27.221.107 
           username: ubuntu
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
