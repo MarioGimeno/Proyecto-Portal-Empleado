@@ -18,6 +18,35 @@ public class MisDatosPresenter implements ContractMisDatos.Presenter {
         this.view = view;
         this.model = new MisDatosModel(context);  // Crear el modelo y pasar el contexto
     }
+    @Override
+    public void fetchUsuarioPorNombre(String nombre) {
+        view.showLoading();  // Mostrar un indicador de carga
+
+        // Usar el modelo para obtener los datos del usuario por nombre
+        model.fetchUsuarioPorNombre(nombre, new ContractMisDatos.Model.OnFinishedListener() {
+            @Override
+            public void onUsuarioLoaded(Usuario usuario) {
+                view.hideLoading();  // Ocultar el indicador de carga
+                view.onUsuarioLoaded(usuario);  // Notificar a la vista que el usuario fue cargado
+            }
+
+            @Override
+            public void onUsuarioUpdated() {
+                // No se usa en esta operación
+            }
+
+            @Override
+            public void onMensajeEnviado() {
+                // No se usa en esta operación
+            }
+
+            @Override
+            public void onFailure(String errorMessage) {
+                view.hideLoading();  // Ocultar el indicador de carga en caso de error
+                view.showError(errorMessage);  // Mostrar el mensaje de error en la vista
+            }
+        });
+    }
 
     @Override
     public void fetchUsuario(int id) {

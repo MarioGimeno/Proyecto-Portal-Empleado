@@ -20,6 +20,26 @@ public class HistorialFichajesModel implements ContractHistorialFichajes.Model {
     }
 
     @Override
+    public void obtenerHistorialFichajes(String usuarioId, OnFinishedListener onFinishedListener) {
+        Call<List<Fichaje>> call = fichajeService.obtenerFichajesPorUsuario(usuarioId);
+        call.enqueue(new Callback<List<Fichaje>>() {
+            @Override
+            public void onResponse(Call<List<Fichaje>> call, Response<List<Fichaje>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    onFinishedListener.onHistorialFichajesCargado(response.body());
+                } else {
+                    onFinishedListener.onFailure("Error: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Fichaje>> call, Throwable t) {
+                onFinishedListener.onFailure(t.getMessage());
+            }
+        });
+    }
+
+    @Override
     public void obtenerHistorialFichajes(int usuarioId, OnFinishedListener onFinishedListener) {
         Call<List<Fichaje>> call = fichajeService.obtenerFichajesPorUsuario(usuarioId);
         call.enqueue(new Callback<List<Fichaje>>() {
@@ -38,4 +58,5 @@ public class HistorialFichajesModel implements ContractHistorialFichajes.Model {
             }
         });
     }
+
 }

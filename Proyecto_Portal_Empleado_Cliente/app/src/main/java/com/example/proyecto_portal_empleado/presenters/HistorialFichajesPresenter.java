@@ -33,4 +33,22 @@ public class HistorialFichajesPresenter implements ContractHistorialFichajes.Pre
             }
         });
     }
+
+    @Override
+    public void cargarHistorialFichajesPorNombre(String usuarioId) {
+        view.showLoading();
+        model.obtenerHistorialFichajes(usuarioId, new ContractHistorialFichajes.Model.OnFinishedListener() {
+            @Override
+            public void onHistorialFichajesCargado(List<Fichaje> fichajes) {
+                view.hideLoading();
+                view.showHistorial(fichajes);
+            }
+
+            @Override
+            public void onFailure(String errorMessage) {
+                view.hideLoading();
+                view.showError(errorMessage);
+            }
+        });
+    }
 }

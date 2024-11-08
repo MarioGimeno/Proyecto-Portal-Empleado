@@ -18,7 +18,26 @@ public class MisVacacionesPresenter implements ContractMisVacaciones.Presenter {
         this.view = view;
         this.model = new MisVacacionesModel();  // Instanciar el modelo
     }
+    public void cargarVacacionesPorNombre(boolean isEditable, String nombre) {
+        model.cargarVacacionesPorNombre(isEditable, nombre, new ContractMisVacaciones.Model.OnFinishedListener() {
+            @Override
+            public void onVacacionesCargadas(List<Vacacion> vacaciones) {
+                view.hideLoading();  // Ocultar el indicador de carga
+                view.showVacaciones(vacaciones);  // Mostrar las vacacio
+            }
 
+            @Override
+            public void onVacacionAgregada() {
+
+            }
+
+            @Override
+            public void onFailure(String errorMessage) {
+                view.hideLoading();
+                view.showError(errorMessage);  // Mostrar el error
+            }
+        });
+    }
     @Override
     public void cargarVacaciones(boolean isEditable, int usuarioId) {
         view.showLoading();  // Mostrar el indicador de carga
@@ -56,6 +75,8 @@ public class MisVacacionesPresenter implements ContractMisVacaciones.Presenter {
             public void onVacacionAgregada() {
                 // Notificar a la vista que la vacación fue agregada correctamente
                 view.showVacacionAgregada();
+                // Recargar la lista de vacaciones
+                cargarVacaciones(true, usuarioId); // Suponemos que la lista debe ser editable luego de agregar una vacación
             }
 
             @Override
@@ -70,6 +91,19 @@ public class MisVacacionesPresenter implements ContractMisVacaciones.Presenter {
         });
     }
 
+    public void agregarVacacionPorNombre(String fechaInicio, String fechaFin, String nombreEmpleado) {
+        model.obtenerUsuarioIdPorNombre(nombreEmpleado, new ContractMisVacaciones.Model.OnUsuarioIdEncontradoListener() {
+            @Override
+            public void onUsuarioIdEncontrado(int usuarioId) {
+                agregarVacacion(fechaInicio, fechaFin, usuarioId);
+            }
+
+            @Override
+            public void onFailure(String errorMessage) {
+                view.showError(errorMessage);  // Mostrar el error si ocurre algún fallo
+            }
+        });
+    }
 
 
     // Método para calcular los días entre las fechas

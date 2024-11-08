@@ -16,7 +16,9 @@ public interface ContractMisVacaciones {
 
     interface Presenter {
         void cargarVacaciones(boolean isEditable, int usuarioId);
+        void cargarVacacionesPorNombre(boolean isEditable, String nombre); // Método para cargar por nombre
         void agregarVacacion(String fechaInicio, String fechaFin, int usuarioId);
+        void agregarVacacionPorNombre(String fechaInicio, String fechaFin, String nombreEmpleado); // Nuevo método para agregar por nombre
     }
 
     interface Model {
@@ -25,8 +27,14 @@ public interface ContractMisVacaciones {
             void onVacacionAgregada();
             void onFailure(String errorMessage);
         }
+        interface OnUsuarioIdEncontradoListener {
+            void onUsuarioIdEncontrado(int usuarioId);
+            void onFailure(String errorMessage);
+        }
 
         void cargarVacaciones(boolean isEditable, int usuarioId, OnFinishedListener listener);
+        void cargarVacacionesPorNombre(boolean isEditable, String nombre, OnFinishedListener listener); // Agrega este método
         void agregarVacacion(String fechaInicio, String fechaFin, int diasRequeridos, int usuarioId, OnFinishedListener listener);
+        void obtenerUsuarioIdPorNombre(String nombre, OnUsuarioIdEncontradoListener listener); // Método para obtener ID por nombre
     }
 }

@@ -12,13 +12,16 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
+
 public interface VacacionesService {
 
     // Obtener todas las vacaciones disponibles
     @GET("vacaciones/usuario/{id}")
     Call<List<Vacacion>> obtenerVacacionesPorUsuario(@Path("id") int usuarioId);
 
-
+    @GET("/vacaciones/usuario/nombre")
+    Call<List<Vacacion>> getVacacionesPorNombreUsuario(@Query("nombre") String nombre);
     // Aprobar una vacación
     @PUT("/vacaciones/{id}/aprobar")
     Call<Void> aprobarVacacion(@Path("id") int id);

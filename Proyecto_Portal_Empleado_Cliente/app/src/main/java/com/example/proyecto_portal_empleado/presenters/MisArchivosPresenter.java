@@ -22,6 +22,11 @@ public class MisArchivosPresenter implements ContractArchivos.Presenter {
     }
 
     @Override
+    public void cargarArchivosPorNombre(String categoria, String nombreUsuario) {
+        model.obtenerArchivosPorNombre(categoria, nombreUsuario);
+    }
+
+    @Override
     public void onArchivoCargado(List<Archivo> archivos) {
         if (archivos != null && !archivos.isEmpty()) {
             view.mostrarArchivos(archivos);

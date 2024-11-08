@@ -15,9 +15,12 @@ public interface ContractHistorialFichajes {
 
     interface Presenter {
         void cargarHistorialFichajes(int usuarioId);
+
+        void cargarHistorialFichajesPorNombre(String usuarioId);
     }
 
     interface Model {
+        void obtenerHistorialFichajes(String usuarioId, OnFinishedListener onFinishedListener);
         void obtenerHistorialFichajes(int usuarioId, OnFinishedListener onFinishedListener);
 
         interface OnFinishedListener {

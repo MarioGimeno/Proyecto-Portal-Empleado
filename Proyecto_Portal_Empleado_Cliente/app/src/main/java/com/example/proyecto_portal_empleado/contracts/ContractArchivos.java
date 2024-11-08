@@ -14,11 +14,14 @@ public interface ContractArchivos {
 
     interface Presenter {
         void cargarArchivos(String categoria, int usuarioId);
+        void cargarArchivosPorNombre(String categoria, String nombreUsuario);
         void onArchivoCargado(List<Archivo> archivos);
         void onError(String mensaje);
     }
 
     interface Model {
         void obtenerArchivos(String categoria, int usuarioId);
+        void obtenerArchivosPorNombre(String categoria, String nombreUsuario);
+
     }
 }

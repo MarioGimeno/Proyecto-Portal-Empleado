@@ -11,6 +11,8 @@ import retrofit2.http.Path;
 public interface UsuarioService {
     @GET("/usuarios/{id}")
     Call<Usuario> obtenerUsuarioPorId(@Path("id") int id);
+    @GET("/usuarios/nombre/{nombre}")
+    Call<Usuario> obtenerUsuarioPorNombre(@Path("nombre") String nombre);
 
     @PUT("/usuarios/{id}")
     Call<Void> actualizarUsuario(@Path("id") int id, @Body Usuario usuario);

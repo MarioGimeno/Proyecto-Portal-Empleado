@@ -3,6 +3,7 @@ package com.example.proyecto_portal_empleado.view;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -14,6 +15,8 @@ import com.example.proyecto_portal_empleado.contracts.ContractUser;
 import com.example.proyecto_portal_empleado.entities.Usuario;
 import com.example.proyecto_portal_empleado.presenters.UsuarioPresenter;
 import com.example.proyecto_portal_empleado.responses.LoginResponse;
+
+import retrofit2.Call;
 
 public class LoginActivity extends AppCompatActivity implements ContractUser.View {
 
@@ -28,7 +31,8 @@ public class LoginActivity extends AppCompatActivity implements ContractUser.Vie
         setContentView(R.layout.activity_login);
         initComponenets();
     }
-    private void initComponenets(){
+
+    private void initComponenets() {
 
         // Vincular las vistas
         etEmail = findViewById(R.id.etEmail);
@@ -54,7 +58,7 @@ public class LoginActivity extends AppCompatActivity implements ContractUser.Vie
                 // Mostrar el teclado solo cuando el usuario interactúe
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-                userPresenter.login(email,password);
+                userPresenter.login(email, password);
             }
         });
     }
@@ -74,5 +78,11 @@ public class LoginActivity extends AppCompatActivity implements ContractUser.Vie
     @Override
     public void failureLogin(String err) {
 
+    }
+
+
+    public void onFailure(Call<LoginResponse> call, Throwable t) {
+        // Error de red u otros fallos
+        Log.e("LoginError", "Error de red: " + t.getMessage());
     }
 }

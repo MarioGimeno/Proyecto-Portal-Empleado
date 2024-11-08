@@ -12,10 +12,21 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.proyecto_portal_empleado.R;
+import com.example.proyecto_portal_empleado.connection.RetrofitClient;
 import com.example.proyecto_portal_empleado.contracts.ContractMisDatos;
 import com.example.proyecto_portal_empleado.entities.Mensaje;
 import com.example.proyecto_portal_empleado.entities.Usuario;
 import com.example.proyecto_portal_empleado.presenters.MisDatosPresenter;
+import com.example.proyecto_portal_empleado.utils.MensajeService;
+
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MisDatosActivity extends AppCompatActivity implements ContractMisDatos.View {
 
@@ -73,38 +84,23 @@ public class MisDatosActivity extends AppCompatActivity implements ContractMisDa
 
     private void configureListeners() {
         btnGuardar.setOnClickListener(v -> {
-            // Captura los datos del usuario y los pasa al presentador para actualizarlos
-            Usuario usuario = new Usuario(
-                    etNombre.getText().toString().trim(),
-                    etApellidos.getText().toString().trim(),
-                    etEmail.getText().toString().trim(),
-                    etCuentaBancaria.getText().toString().trim(),
-                    etNumSeguridadSocial.getText().toString().trim(),
-                    etDepartamento.getText().toString().trim(),
-                    etFechaContratacion.getText().toString().trim(),
-                    etFechaNacimiento.getText().toString().trim(),
-                    etTelefonoContacto.getText().toString().trim(),
-                    etPuestoTrabajo.getText().toString().trim(),
-                    etDireccion.getText().toString().trim()
-            );
-            presenter.actualizarUsuario(idUsuarioActual, usuario);  // Llamada al presentador para actualizar
+            String idBuscarString = etIdBuscar.getText().toString().trim();
+
+            if (!idBuscarString.isEmpty()) {
+                presenter.fetchUsuarioPorNombre(idBuscarString);  // Realizar la búsqueda de usuario asincrónicamente
+            } else {
+                Toast.makeText(this, "Por favor, introduce un nombre para buscar", Toast.LENGTH_SHORT).show();
+            }
         });
 
         btnVolver.setOnClickListener(v -> finish());
 
         btnBuscar.setOnClickListener(v -> {
-            // Obtener el ID del usuario a buscar y solicitar al presentador que lo busque
             String idBuscarString = etIdBuscar.getText().toString().trim();
             if (!idBuscarString.isEmpty()) {
-                try {
-                    int idBuscar = Integer.parseInt(idBuscarString);
-                    presenter.fetchUsuario(idBuscar);
-                    idUsuarioActual = idBuscar;
-                } catch (NumberFormatException e) {
-                    Toast.makeText(MisDatosActivity.this, "ID no válido. Introduce un número", Toast.LENGTH_SHORT).show();
-                }
+                presenter.fetchUsuarioPorNombre(idBuscarString);  // Realizar la búsqueda de usuario asincrónicamente
             } else {
-                Toast.makeText(MisDatosActivity.this, "Por favor, introduce un ID para buscar", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Por favor, introduce un nombre para buscar", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -113,22 +109,82 @@ public class MisDatosActivity extends AppCompatActivity implements ContractMisDa
 
     @Override
     public void onUsuarioLoaded(Usuario usuario) {
-        // Llenar los campos con los datos recibidos del usuario
-        userData.setVisibility(View.VISIBLE);
-        etNombre.setText(usuario.getNombre());
-        etApellidos.setText(usuario.getApellidos());
-        etEmail.setText(usuario.getEmail());
-        etCuentaBancaria.setText(usuario.getCuentaBancaria());
-        etNumSeguridadSocial.setText(usuario.getNumSeguridadSocial());
-        etDepartamento.setText(usuario.getDepartamento());
-        etFechaContratacion.setText(usuario.getFechaContratacion());
-        etFechaNacimiento.setText(usuario.getFechaNacimiento());
-        etPuestoTrabajo.setText(usuario.getPuestoTrabajo());
-        etTelefonoContacto.setText(usuario.getTelefonoContacto());
-        etDireccion.setText(usuario.getDireccion());
-        mostrarCampos();
-    }
+        if (usuario != null) {
+            // Llenar los campos con los datos recibidos del usuario
+            userData.setVisibility(View.VISIBLE);
+            etNombre.setText(usuario.getNombre());
+            etApellidos.setText(usuario.getApellidos());
+            etEmail.setText(usuario.getEmail());
+            etCuentaBancaria.setText(usuario.getCuentaBancaria());
+            etNumSeguridadSocial.setText(usuario.getNumSeguridadSocial());
+            etDepartamento.setText(usuario.getDepartamento());
+            etFechaContratacion.setText(usuario.getFechaContratacion());
+            etFechaNacimiento.setText(usuario.getFechaNacimiento());
+            etPuestoTrabajo.setText(usuario.getPuestoTrabajo());
+            etTelefonoContacto.setText(usuario.getTelefonoContacto());
+            etDireccion.setText(usuario.getDireccion());
+            mostrarCampos();
 
+            // Configurar el botón Guardar para actualizar los datos del usuario
+            btnGuardar.setOnClickListener(v -> {
+                Usuario usuarioActualizado = new Usuario(
+                        etNombre.getText().toString().trim(),
+                        etApellidos.getText().toString().trim(),
+                        etEmail.getText().toString().trim(),
+                        etCuentaBancaria.getText().toString().trim(),
+                        etNumSeguridadSocial.getText().toString().trim(),
+                        etDepartamento.getText().toString().trim(),
+                        etFechaContratacion.getText().toString().trim(),
+                        etFechaNacimiento.getText().toString().trim(),
+                        etTelefonoContacto.getText().toString().trim(),
+                        etPuestoTrabajo.getText().toString().trim(),
+                        etDireccion.getText().toString().trim()
+                );
+
+                // Llamar al presentador para actualizar el usuario con el ID del usuario encontrado
+                presenter.actualizarUsuario(usuario.getIdUsuario(), usuarioActualizado);
+                String horaActual = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());  // Cambiar a "HH:mm:ss"
+                String fechaActual = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(new Date()); // Cambiar a "dd/MM/yyyy"
+
+                Mensaje mensaje = new Mensaje();
+                mensaje.setIdUsuario(usuario.getIdUsuario());
+                mensaje.setContenido("Se han modificado tus datos el " + fechaActual + " a las " + horaActual + " por el administrador");
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+
+                String fechaActualMensaje = sdf.format(new Date());
+                mensaje.setFecha(fechaActualMensaje);
+                enviarMensajeNotificacion(mensaje);
+            });
+        } else {
+            Toast.makeText(this, "Usuario no encontrado", Toast.LENGTH_SHORT).show();
+        }
+    }
+    private void enviarMensajeNotificacion(Mensaje mensaje) {
+        MensajeService mensajeService = RetrofitClient.getRetrofitInstance().create(MensajeService.class);
+        Log.d("MensajeNotificacion", "Mensaje enviado: " + mensaje.toString()); // Log para comprobar los datos enviados
+        mensajeService.enviarMensaje(mensaje).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    Log.d("Mensaje", "Mensaje enviado con éxito.");
+                } else {
+                    try {
+                        // Registrar el código de respuesta y convertir el cuerpo de la respuesta a String
+                        String errorBody = response.errorBody().string();
+                        Log.e("Mensaje", "Error al enviar el mensaje. Código: " + response.code());
+                        Log.e("Mensaje", "Cuerpo de la respuesta: " + errorBody);
+                    } catch (IOException e) {
+                        Log.e("Mensaje", "Error al leer el cuerpo de la respuesta", e);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Log.e("Mensaje", "Error en la conexión", t);
+            }
+        });
+    }
     @Override
     public void onUsuarioUpdated() {
         Toast.makeText(this, "Usuario actualizado correctamente", Toast.LENGTH_SHORT).show();
@@ -157,7 +213,7 @@ public class MisDatosActivity extends AppCompatActivity implements ContractMisDa
 
     @Override
     public void showError(String errorMessage) {
-
+        Toast.makeText(this, "Error: " + errorMessage, Toast.LENGTH_SHORT).show();
     }
 
     // Otros métodos de la clase (ocultarCampos, mostrarCampos, habilitarCampos, etc.) siguen siendo los mismos.

@@ -90,16 +90,14 @@ public class MisArchivosActivity extends AppCompatActivity implements ContractAr
         etBuscarEmpleado.setVisibility(View.VISIBLE);
         btnBuscar.setVisibility(View.VISIBLE);
 
+
         btnBuscar.setOnClickListener(v -> {
-            String idBuscarString = etBuscarEmpleado.getText().toString().trim();
-            if (!idBuscarString.isEmpty()) {
-                try {
-                    int idBuscar = Integer.parseInt(idBuscarString);
-                    usuarioId = idBuscar;
-                    presenter.cargarArchivos(spinnerCategorias.getSelectedItem().toString().toLowerCase(), idBuscar);
-                } catch (NumberFormatException e) {
-                    Toast.makeText(this, "ID no válido", Toast.LENGTH_SHORT).show();
-                }
+            String nombreBuscar = etBuscarEmpleado.getText().toString().trim();
+            if (!nombreBuscar.isEmpty()) {
+                // Realiza la llamada al presenter con el nombre y la categoría seleccionada
+                presenter.cargarArchivosPorNombre(spinnerCategorias.getSelectedItem().toString().toLowerCase(), nombreBuscar);
+            } else {
+                Toast.makeText(this, "Por favor, ingrese un nombre", Toast.LENGTH_SHORT).show();
             }
         });
     }

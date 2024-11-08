@@ -83,10 +83,11 @@ public class HistorialFichajeActivity extends AppCompatActivity implements Contr
         calendarView.setOnDateChangeListener((view, year, month, dayOfMonth) -> {
             fechaSeleccionada = String.format(Locale.getDefault(), "%02d/%02d/%d", dayOfMonth, month + 1, year);
             Log.d("HistorialActivity", "Fecha seleccionada en el calendario: " + fechaSeleccionada);
+            String usuarioIdStr = etBuscarEmpleado.getText().toString().trim();
 
             // Si es admin y ha buscado un empleado, cargar sus fichajes automáticamente
             if (isAdmin && usuarioActual != -1) {
-                presenter.cargarHistorialFichajes(usuarioActual);
+                presenter.cargarHistorialFichajesPorNombre(usuarioIdStr);
             } else if (!isAdmin) {
                 presenter.cargarHistorialFichajes(usuarioActual);
             }
@@ -99,15 +100,13 @@ public class HistorialFichajeActivity extends AppCompatActivity implements Contr
         btnBuscar.setOnClickListener(v -> {
             String usuarioIdStr = etBuscarEmpleado.getText().toString().trim();
             if (!usuarioIdStr.isEmpty()) {
-                int usuarioId = Integer.parseInt(usuarioIdStr);
-                usuarioActual = usuarioId;  // Guardar el ID del empleado buscado
 
                 // Cargar los fichajes del empleado para la fecha seleccionada
-                presenter.cargarHistorialFichajes(usuarioActual);
+                presenter.cargarHistorialFichajesPorNombre(usuarioIdStr);
 
                 // Forzar la actualización de los fichajes con la fecha seleccionada (incluso si es el día actual)
                 fechaSeleccionada = obtenerFechaActual();
-                presenter.cargarHistorialFichajes(usuarioActual);
+                presenter.cargarHistorialFichajesPorNombre(usuarioIdStr);
             } else {
                 Toast.makeText(HistorialFichajeActivity.this, "Por favor, ingrese un ID de empleado válido", Toast.LENGTH_SHORT).show();
             }

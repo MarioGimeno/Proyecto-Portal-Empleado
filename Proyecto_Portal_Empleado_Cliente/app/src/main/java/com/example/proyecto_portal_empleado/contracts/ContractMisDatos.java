@@ -11,19 +11,18 @@ public interface ContractMisDatos {
         void onMensajeEnviado();
         void onFailure(String errorMessage);
 
-
-        // Métodos adicionales para mostrar/ocultar el indicador de carga y errores
         void showLoading();
         void hideLoading();
         void showError(String errorMessage);
     }
 
-    // Interfaz para el Presenter
     interface Presenter {
         void fetchUsuario(int id);
+        void fetchUsuarioPorNombre(String nombre);  // Sin retorno
         void actualizarUsuario(int id, Usuario usuario);
         void enviarMensaje(Mensaje mensaje);
     }
+
     interface Model {
         interface OnFinishedListener {
             void onUsuarioLoaded(Usuario usuario);
@@ -32,9 +31,9 @@ public interface ContractMisDatos {
             void onFailure(String errorMessage);
         }
 
+        void fetchUsuarioPorNombre(String nombre, OnFinishedListener listener);  // Cambio a void
         void fetchUsuario(int id, OnFinishedListener listener);
         void actualizarUsuario(int id, Usuario usuario, OnFinishedListener listener);
         void enviarMensaje(Mensaje mensaje, OnFinishedListener listener);
     }
 }
-

@@ -13,6 +13,9 @@ import retrofit2.http.Query;
 public interface FichajeService {
 
     // Obtener fichajes por usuario
+    @GET("fichajes/usuario/nombre")
+    Call<List<Fichaje>> obtenerFichajesPorUsuario(@Query("idUsuario") String idUsuario);
+    // Obtener fichajes por usuario
     @GET("fichajes/usuario")
     Call<List<Fichaje>> obtenerFichajesPorUsuario(@Query("idUsuario") int idUsuario);
 

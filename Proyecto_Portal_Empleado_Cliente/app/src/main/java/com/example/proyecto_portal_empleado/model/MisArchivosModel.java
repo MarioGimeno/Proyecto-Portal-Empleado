@@ -41,4 +41,23 @@ public class MisArchivosModel implements ContractArchivos.Model {
             }
         });
     }
+
+    @Override
+    public void obtenerArchivosPorNombre(String categoria, String nombreUsuario) {
+        archivoService.getArchivosByCategoriaYNombre(categoria, nombreUsuario).enqueue(new Callback<List<Archivo>>() {
+            @Override
+            public void onResponse(Call<List<Archivo>> call, Response<List<Archivo>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    presenter.onArchivoCargado(response.body());
+                } else {
+                    presenter.onError("Error al cargar archivos.");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Archivo>> call, Throwable t) {
+                presenter.onError("Error: " + t.getMessage());
+            }
+        });
+    }
 }

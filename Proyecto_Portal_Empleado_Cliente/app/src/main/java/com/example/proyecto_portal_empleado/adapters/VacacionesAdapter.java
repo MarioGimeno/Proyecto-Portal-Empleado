@@ -69,6 +69,7 @@ public class VacacionesAdapter extends RecyclerView.Adapter<VacacionesAdapter.Va
     public void onBindViewHolder(@NonNull VacacionViewHolder holder, int position) {
         Vacacion vacacion = vacacionesList.get(position);
 
+
         holder.tvFechaInicio.setText("Inicio: " + vacacion.getFechaInicio());
         holder.tvFechaFin.setText("Fin: " + vacacion.getFechaFin());
 
@@ -76,9 +77,15 @@ public class VacacionesAdapter extends RecyclerView.Adapter<VacacionesAdapter.Va
 
         SharedPreferences sharedPreferences = holder.itemView.getContext().getSharedPreferences("UserPreferences", MODE_PRIVATE);
         String tipoEmpleado = sharedPreferences.getString("tipoEmpleado", "empleado"); // Por defecto, "empleado"
-
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt("idUsuarioVacacion", vacacion.getIdUsuario());
+        editor.apply();
         isEditable = "Admin".equals(tipoEmpleado);
         Log.d("VacacionesAdapter", "Tipo de empleado: " + tipoEmpleado + " - isEditable: " + isEditable);
+        Log.d("VacacionesAdapter", "idUsuario almacenado en SharedPreferences: " + vacacion.getIdUsuario()); // Verificar idUsuario almacenado
+        Log.d("VacacionesAdapter", "Vacacion: " + vacacion.toString()); // Verificar idUsuario almacenado
+        Log.d("VacacionesAdapter", "UsuarioVacacion: " + idBuscarEmpleado); // Verificar idUsuario almacenado
+
 
         if (isEditable) {
             holder.btnAprobar.setVisibility(View.VISIBLE);
@@ -129,10 +136,8 @@ public class VacacionesAdapter extends RecyclerView.Adapter<VacacionesAdapter.Va
     // Método para aprobar la vacación y actualizar los días restantes
     private void aprobarVacacion(Vacacion vacacion, VacacionViewHolder holder, int diasVacacion, Context context) {
         if (!idBuscarEmpleado.isEmpty()) {
-            int usuarioId;
             try {
-                usuarioId = Integer.parseInt(idBuscarEmpleado); // Use idBuscarEmpleado
-
+                int usuarioId = Integer.parseInt(idBuscarEmpleado);
                 vacacionesService.aprobarVacacion(vacacion.getIdVacacion()).enqueue(new Callback<Void>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
@@ -142,7 +147,9 @@ public class VacacionesAdapter extends RecyclerView.Adapter<VacacionesAdapter.Va
                             // Marcar la vacación como aprobada, sin descontar los días nuevamente
                             vacacion.setPendiente(false);
                             vacacion.setAprobada(true);
-
+                            // Actualizar los días restantes después de rechazar
+                            diasRestantes -= diasVacacion;
+                            listener.onActualizarDiasRestantes(diasRestantes);  // Notificar al listener
                             notifyDataSetChanged();  // Actualizar la lista en la UI
 
                             // Enviar una notificación al empleado
@@ -177,10 +184,9 @@ public class VacacionesAdapter extends RecyclerView.Adapter<VacacionesAdapter.Va
     // Método para rechazar la vacación y actualizar los días restantes
     private void rechazarVacacion(Vacacion vacacion, VacacionViewHolder holder, int diasVacacion, Context context) {
         if (!idBuscarEmpleado.isEmpty()) {
-            int usuarioId;
-            try {
-                usuarioId = Integer.parseInt(idBuscarEmpleado); // Use idBuscarEmpleado
 
+            try {
+                int usuarioId = Integer.parseInt(idBuscarEmpleado);
                 vacacionesService.rechazarVacacion(vacacion.getIdVacacion()).enqueue(new Callback<Void>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {

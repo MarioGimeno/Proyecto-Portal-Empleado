@@ -1,7 +1,6 @@
 package com.example.proyecto_portal_empleado.model;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -33,6 +32,30 @@ public class MisDatosModel implements ContractMisDatos.Model {
         usuarioService = RetrofitClient.getRetrofitInstance().create(UsuarioService.class);
         mensajeService = RetrofitClient.getRetrofitInstance().create(MensajeService.class);
     }
+
+    @Override
+    public void fetchUsuarioPorNombre(String nombre, OnFinishedListener listener) {
+        usuarioService.obtenerUsuarioPorNombre(nombre).enqueue(new Callback<Usuario>() {
+            @Override
+            public void onResponse(Call<Usuario> call, Response<Usuario> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    Usuario usuario = response.body();
+                    listener.onUsuarioLoaded(usuario);  // Notificar que el usuario fue cargado
+                } else {
+                    listener.onFailure("Error al cargar los datos del usuario");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Usuario> call, Throwable t) {
+                listener.onFailure("Error de conexión al servidor");
+                Log.e("MisDatosModel", "Error al cargar usuario por nombre", t);
+            }
+        });
+
+    }
+
+
 
     @Override
     public void fetchUsuario(int id, OnFinishedListener listener) {
