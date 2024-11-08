@@ -25,7 +25,9 @@ public class UsuarioService {
     public Optional<Usuario> getUsuarioById(int id) {
         return usuarioRepository.findById(id);
     }
-
+    public Optional<Usuario> obtenerUsuarioPorNombre(String nombre) {
+        return usuarioRepository.findByNombre(nombre);
+    }
     // Crear un nuevo usuario
     public Usuario createUsuario(Usuario usuario) {
         return usuarioRepository.save(usuario);

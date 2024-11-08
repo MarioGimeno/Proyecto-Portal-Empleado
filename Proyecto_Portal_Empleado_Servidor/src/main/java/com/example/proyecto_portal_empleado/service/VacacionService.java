@@ -26,7 +26,7 @@ public class VacacionService {
     public List<Vacacion> getAllVacaciones() {
         return vacacionRepository.findAll();
     }
-
+    public List<Vacacion> getVacacionByNombre(String nombre){ return vacacionRepository.findVacacionByUsuarioNombre(nombre);}
     // Obtener vacaciones por ID
     public Optional<Vacacion> getVacacionById(int id) {
         return vacacionRepository.findById(id);

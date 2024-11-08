@@ -28,8 +28,10 @@ public class ArchivoService {
     public Optional<Archivo> getArchivoById(Long id) {
         return archivoRepository.findById(id);  // Usa Long directamente
     }
-
-    public Archivo createArchivo(Archivo archivo) {
+    public List<Archivo> obtenerArchivosPorNombreUsuario(String categoria, String nombre) {
+        return archivoRepository.findArchivosByCategoriaAndUsuarioNombre(categoria, nombre);
+    }
+        public Archivo createArchivo(Archivo archivo) {
         return archivoRepository.save(archivo);
     }
 

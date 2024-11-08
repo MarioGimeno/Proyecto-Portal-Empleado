@@ -119,33 +119,33 @@ INSERT INTO usuario (nombre, apellidos, email, password, cuenta_bancaria, num_se
 VALUES ('Carlos', 'López', 'carlos@example.com', 'carlos123', 'ES22334455667788990011', '223344556', 2);
 -- Inserts para el trabajador BackEnd Developer (usuario_id = 1)
 INSERT INTO archivos (nombre_archivo, categoria, url_archivo, usuario_id, fecha_subida)
-VALUES ('Contrato BackEnd Developer', 'contrato', 'https://bucketplanetalert.s3.amazonaws.com/Contrato_BackEnd_Developer.pdf', 1, NOW());
+VALUES ('Contrato BackEnd Developer', 'contrato', 'https://bucketportalempleado.s3.us-east-1.amazonaws.com/Contrato_BackEnd_Developer.pdf', 1, NOW());
 
 INSERT INTO archivos (nombre_archivo, categoria, url_archivo, usuario_id, fecha_subida)
-VALUES ('Nomina BackEnd Developer Diciembre', 'nomina', 'https://bucketplanetalert.s3.amazonaws.com/Nomina_BackEnd_Developer_Dec.pdf', 1, NOW());
+VALUES ('Nomina BackEnd Developer Diciembre', 'nomina', 'https://bucketportalempleado.s3.us-east-1.amazonaws.com/Nomina_BackEnd_Developer_Dec.pdf', 1, NOW());
 
 INSERT INTO archivos (nombre_archivo, categoria, url_archivo, usuario_id, fecha_subida)
-VALUES ('Nomina BackEnd Developer Noviembre', 'nomina', 'https://bucketplanetalert.s3.amazonaws.com/Nomina_BackEnd_Developer_Nov.pdf', 1, NOW());
+VALUES ('Nomina BackEnd Developer Noviembre', 'nomina', 'https://bucketportalempleado.s3.us-east-1.amazonaws.com/Nomina_BackEnd_Developer_Nov.pdf', 1, NOW());
 
 INSERT INTO archivos (nombre_archivo, categoria, url_archivo, usuario_id, fecha_subida)
-VALUES ('Nomina BackEnd Developer', 'nomina', 'https://bucketplanetalert.s3.amazonaws.com/Nomina_BackEnd_Developer.pdf', 1, NOW());
+VALUES ('Nomina BackEnd Developer', 'nomina', 'https://bucketportalempleado.s3.us-east-1.amazonaws.com/Nomina_BackEnd_Developer.pdf', 1, NOW());
 
 -- Inserts para el trabajador Cloud Engineer (usuario_id = 2)
 INSERT INTO archivos (nombre_archivo, categoria, url_archivo, usuario_id, fecha_subida)
 VALUES ('Contrato Cloud Engineer', 'contrato', 'https://bucketplanetalert.s3.amazonaws.com/Contrato_Cloud_Engineer.pdf', 2, NOW());
 
 INSERT INTO archivos (nombre_archivo, categoria, url_archivo, usuario_id, fecha_subida)
-VALUES ('Nomina Cloud Engineer Noviembre', 'nomina', 'https://bucketplanetalert.s3.amazonaws.com/Nomina_Cloud_Engineer_Nov.pdf', 2, NOW());
+VALUES ('Nomina Cloud Engineer Noviembre', 'nomina', 'https://bucketportalempleado.s3.us-east-1.amazonaws.com/Nomina_Cloud_Engineer_Nov.pdf', 2, NOW());
 
 INSERT INTO archivos (nombre_archivo, categoria, url_archivo, usuario_id, fecha_subida)
-VALUES ('Nomina Cloud Engineer', 'nomina', 'https://bucketplanetalert.s3.amazonaws.com/Nomina_Cloud_Engineer.pdf', 2, NOW());
+VALUES ('Nomina Cloud Engineer', 'nomina', 'https://bucketportalempleado.s3.us-east-1.amazonaws.com/Nomina_Cloud_Engineer.pdf', 2, NOW());
 
 -- Inserts para el trabajador FrontEnd Developer (usuario_id = 3)
 INSERT INTO archivos (nombre_archivo, categoria, url_archivo, usuario_id, fecha_subida)
-VALUES ('Contrato FrontEnd Developer', 'contrato', 'https://bucketplanetalert.s3.amazonaws.com/Contrato_FrontEnd_Developer.pdf', 3, NOW());
+VALUES ('Contrato FrontEnd Developer', 'contrato', 'https://bucketportalempleado.s3.us-east-1.amazonaws.com/Contrato_FrontEnd_Developer.pdf', 3, NOW());
 
 INSERT INTO archivos (nombre_archivo, categoria, url_archivo, usuario_id, fecha_subida)
-VALUES ('Nomina FrontEnd Developer Noviembre', 'nomina', 'https://bucketplanetalert.s3.amazonaws.com/Nomina_FrontEnd_Developer_Nov.pdf', 3, NOW());
+VALUES ('Nomina FrontEnd Developer Noviembre', 'nomina', 'https://bucketportalempleado.s3.us-east-1.amazonaws.com/Nomina_FrontEnd_Developer+(1).pdf', 3, NOW());
 
 INSERT INTO archivos (nombre_archivo, categoria, url_archivo, usuario_id, fecha_subida)
-VALUES ('Nomina FrontEnd Developer', 'nomina', 'https://bucketplanetalert.s3.amazonaws.com/Nomina_FrontEnd_Developer.pdf', 3, NOW());
+VALUES ('Nomina FrontEnd Developer', 'nomina', 'https://bucketportalempleado.s3.us-east-1.amazonaws.com/Nomina_Desarrolladora_Frontend.pdf', 3, NOW());

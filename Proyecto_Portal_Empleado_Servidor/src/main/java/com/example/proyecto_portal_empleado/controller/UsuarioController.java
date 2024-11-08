@@ -2,6 +2,7 @@ package com.example.proyecto_portal_empleado.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.example.proyecto_portal_empleado.model.Usuario;
@@ -30,6 +31,16 @@ public class UsuarioController {
         return usuario.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    // Endpoint para obtener un usuario por nombre
+    @GetMapping("/nombre/{nombre}")
+    public ResponseEntity<Usuario> obtenerUsuarioPorNombre(@PathVariable String nombre) {
+        Optional<Usuario> usuario = usuarioService.obtenerUsuarioPorNombre(nombre);
+        if (usuario.isPresent()) {
+            return ResponseEntity.ok(usuario.get());
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+    }
     // Crear un nuevo usuario
     @PostMapping
     public Usuario createUsuario(@RequestBody Usuario usuario) {

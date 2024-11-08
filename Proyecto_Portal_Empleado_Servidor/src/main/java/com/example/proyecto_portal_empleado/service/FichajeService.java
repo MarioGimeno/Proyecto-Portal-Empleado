@@ -31,6 +31,10 @@ public class FichajeService {
         return fichajeRepository.findByUsuario(usuario);
     }
 
+    public List<Fichaje> obtenerFichajesPorNombreUsuario(String nombreUsuario) {
+        return fichajeRepository.findFichajeByUsuarioNombre(nombreUsuario);
+    }
+
     public Fichaje agregarFichaje(Fichaje fichaje) {
         System.out.println(fichaje.getUsuarioId());
         Usuario usuario = usuarioRepository.findById(fichaje.getUsuarioId())

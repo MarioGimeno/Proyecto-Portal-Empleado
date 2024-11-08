@@ -25,6 +25,15 @@ public class FichajeController {
         }
         return new ResponseEntity<>(fichajes, HttpStatus.OK);
     }
+    // Obtener todos los fichajes por usuario
+    @GetMapping("/usuario/nombre")
+    public ResponseEntity<List<Fichaje>> obtenerFichajesPorUsuario(@RequestParam String idUsuario) {
+        List<Fichaje> fichajes = fichajeService.obtenerFichajesPorNombreUsuario(idUsuario);
+        if (fichajes.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(fichajes, HttpStatus.OK);
+    }
 
     // Agregar un nuevo fichaje
     @PostMapping("/agregar")

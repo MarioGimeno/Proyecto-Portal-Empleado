@@ -9,5 +9,6 @@ import java.util.List;
 @Repository
 public interface VacacionRepository extends JpaRepository<Vacacion, Integer> {
     List<Vacacion> findByUsuario_IdUsuario(int idUsuario);
+    List<Vacacion> findVacacionByUsuarioNombre(String nombre);
 }
 

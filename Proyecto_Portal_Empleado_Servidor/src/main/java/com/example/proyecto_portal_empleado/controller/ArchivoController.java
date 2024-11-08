@@ -69,8 +69,11 @@ public class ArchivoController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-
-
+    @GetMapping("/usuario")
+    public ResponseEntity<List<Archivo>> obtenerArchivosPorNombreUsuario(@RequestParam String categoria, @RequestParam String nombre) {
+        List<Archivo> archivos = archivoService.obtenerArchivosPorNombreUsuario(categoria, nombre);
+        return ResponseEntity.ok(archivos);
+    }
     // Obtener un archivo por ID
     @GetMapping("/{id}")
     public ResponseEntity<Archivo> getArchivoById(@PathVariable int id) {

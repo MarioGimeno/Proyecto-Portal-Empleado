@@ -38,6 +38,16 @@ public class VacacionController {
             return ResponseEntity.notFound().build();
         }
     }
+    @GetMapping("/usuario/nombre")
+    public ResponseEntity<List<Vacacion>> getVacacionesPorNombre(@RequestParam String nombre) {
+        List<Vacacion> vacaciones = vacacionService.getVacacionByNombre(nombre);
+        if (!vacaciones.isEmpty()) {
+            return ResponseEntity.ok(vacaciones);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 
 
     // Crear una nueva vacación
